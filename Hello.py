@@ -14,10 +14,9 @@
 
 import streamlit as st
 from streamlit.logger import get_logger
+from st_pages import Page, show_pages, add_page_title
 
 LOGGER = get_logger(__name__)
-
-from st_pages import Page, show_pages, add_page_title
 
 # Optional -- adds the title and icon to the current page
 add_page_title()
@@ -27,15 +26,15 @@ add_page_title()
 show_pages(
     [
         Page("Hello.py", "Home", "🏠"),
-        # Page("other_pages/page2.py", "Page 2", ":books:"),
+        Page("pages/0_Animation_Demo.py", "Animation Demo", ":books:"),
     ]
 )
 
 def run():
-    st.set_page_config(
-        page_title="Home",
-        page_icon="👋",
-    )
+    # st.set_page_config(
+    #     page_title="Home",
+    #     page_icon="👋",
+    # )
 
     st.write("# Welcome to Streamlit! 👋")
 
