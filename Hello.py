@@ -17,6 +17,19 @@ from streamlit.logger import get_logger
 
 LOGGER = get_logger(__name__)
 
+from st_pages import Page, show_pages, add_page_title
+
+# Optional -- adds the title and icon to the current page
+add_page_title()
+
+# Specify what pages should be shown in the sidebar, and what their titles and icons
+# should be
+show_pages(
+    [
+        Page("Hello.py", "Home", "🏠"),
+        # Page("other_pages/page2.py", "Page 2", ":books:"),
+    ]
+)
 
 def run():
     st.set_page_config(
