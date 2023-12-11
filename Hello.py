@@ -21,7 +21,10 @@ import pandas as pd
 LOGGER = get_logger(__name__)
 
 # Optional -- adds the title and icon to the current page
-add_page_title()
+st.set_page_config(
+     page_title="Forecasting Tool",
+     layout="wide"
+     )
 
 show_pages(
     [
