@@ -26,22 +26,24 @@ st.set_page_config(
      layout="wide"
      )
 
-st.write("# Forecasting Tool 👋")
+st.write("# Forecasting Tool")
+
+col1, col2, col3 = st.columns([.25,1,.25])
 
 servline_list = ['Service Line','Mamm','CIS','Vein']
 forecast_list = ['Forecast Version','0+12','1+11','2+10','3+9','4+8','5+7','6+6','7+5','8+4','9+3','10+2','11+1']
 fxarea_list = ['Functional Area', 'Ops', 'Finance', 'Marketing', 'Other']
+with col2:
+    with st.form("my_form"):
+        fxarea_select     = st.selectbox('Functional Area', fxarea_list)
+        servline_select = st.selectbox('Service Line', servline_list)
+        forecast_select = st.selectbox('Forecast Version', forecast_list)
+        editor_entry = st.text_input('Name')
+        note_entry   = st.text_input('Submission Note')
+        uploaded_file = st.file_uploader("Upload File")
 
-with st.form("my_form"):
-    fxarea_select     = st.selectbox('Functional Area', fxarea_list)
-    servline_select = st.selectbox('Service Line', servline_list)
-    forecast_select = st.selectbox('Forecast Version', forecast_list)
-    editor_entry = st.text_input('Name')
-    note_entry   = st.text_input('Submission Note')
-    uploaded_file = st.file_uploader("Upload File")
-
-    # Every form must have a submit button.
-    submitted = st.form_submit_button("Submit")
+        # Every form must have a submit button.
+        submitted = st.form_submit_button("Submit")
 
 
 
