@@ -20,6 +20,13 @@ import pandas as pd
 
 LOGGER = get_logger(__name__)
 
+show_pages(
+    [
+        Page("Hello.py", "Submit File"),
+        Page("pages/01_Mamm.py", "Mamm Review"),
+    ]
+)
+
 # Optional -- adds the title and icon to the current page
 st.set_page_config(
      page_title="Forecasting Tool",
@@ -35,61 +42,12 @@ forecast_list = ['Forecast Version','0+12','1+11','2+10','3+9','4+8','5+7','6+6'
 fxarea_list = ['Functional Area', 'Ops', 'Finance', 'Marketing', 'Other']
 with col2:
     with st.form("my_form"):
-        fxarea_select     = st.selectbox('Functional Area', fxarea_list)
         servline_select = st.selectbox('Service Line', servline_list)
         forecast_select = st.selectbox('Forecast Version', forecast_list)
+        fxarea_select     = st.selectbox('Functional Area', fxarea_list)
         editor_entry = st.text_input('Name')
         note_entry   = st.text_input('Submission Note')
         uploaded_file = st.file_uploader("Upload File")
 
         # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
-
-
-
-col1b, col2b, col3b = st.columns(3)
-
-df = pd.DataFrame(
-    {
-        "name": ["Roadmap", "Extras", "Issues"],
-        "url": ["https://roadmap.streamlit.app", "https://extras.streamlit.app", "https://issues.streamlit.app"],
-        "stars": [random.randint(0, 1000) for _ in range(3)],
-        "views_history": [[random.randint(0, 5000) for _ in range(30)] for _ in range(3)],
-    }
-)
-st.dataframe(
-    df,
-    column_config={
-        "name": "App name",
-        "stars": st.column_config.NumberColumn(
-            "Github Stars",
-            help="Number of stars on GitHub",
-            format="%d ⭐",
-        ),
-        "url": st.column_config.LinkColumn("App URL"),
-        "views_history": st.column_config.LineChartColumn(
-            "Views (past 30 days)", y_min=0, y_max=5000
-        ),
-    },
-    hide_index=True,
-)
-
-st.markdown(
-    """
-    Streamlit is an open-source app framework built specifically for
-    Machine Learning and Data Science projects.
-    **👈 Select a demo from the sidebar** to see some examples
-    of what Streamlit can do!
-    ### Want to learn more?
-    - Check out [streamlit.io](https://streamlit.io)
-    - Jump into our [documentation](https://docs.streamlit.io)
-    - Ask a question in our [community
-      forums](https://discuss.streamlit.io)
-    ### See more complex demos
-    - Use a neural net to [analyze the Udacity Self-driving Car Image
-      Dataset](https://github.com/streamlit/demo-self-driving)
-    - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-"""
-)
-
-
