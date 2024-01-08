@@ -52,5 +52,7 @@ with col2:
         # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
 
-if submitted: h.upload_basic(uploaded_file, 'streamlitTest.xlsx')
-# hold
+if uploaded_file is not None:
+    # To read file as bytes:
+    bytes_data = uploaded_file.getvalue()
+    st.write(bytes_data)
