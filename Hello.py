@@ -14,8 +14,8 @@
 
 import streamlit as st
 from streamlit.logger import get_logger
-from st_pages import Page, show_pages, add_page_title
-import random
+from st_pages import Page, show_pages
+import helpers as h
 import pandas as pd
 
 LOGGER = get_logger(__name__)
@@ -51,3 +51,5 @@ with col2:
 
         # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
+
+if submitted: h.upload_basic(uploaded_file, 'streamlitTest.xlsx')
