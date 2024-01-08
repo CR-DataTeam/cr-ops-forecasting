@@ -4,3 +4,4 @@ pandas
 pydeck
 streamlit
 st-pages
+google-api-python-client

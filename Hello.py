@@ -30,12 +30,12 @@ st.write("# Forecasting Tool 👋")
 
 col1, col2 = st.columns(2)
 
-year_list = ['2023','2024']
-forecast_list = ['Forecast Version','0+12','1+11','2+10','3+9','4+8','5+7','6+6','7+5','8+4','9+3','10+2','11+1']
 servline_list = ['Service Line','Mamm','CIS','Vein']
+forecast_list = ['Forecast Version','0+12','1+11','2+10','3+9','4+8','5+7','6+6','7+5','8+4','9+3','10+2','11+1']
+fxarea_list = ['Functional Area', 'Ops', 'Finance', 'Marketing', 'Other']
 with col1:
     with st.form("my_form"):
-        year_select     = st.selectbox('Year', year_list)
+        fxarea_select     = st.selectbox('Functional Area', fxarea_list)
         servline_select = st.selectbox('Service Line', servline_list)
         forecast_select = st.selectbox('Forecast Version', forecast_list)
         editor_entry = st.text_input('Name')
