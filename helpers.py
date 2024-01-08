@@ -21,8 +21,8 @@ def upload_basic(upload_file, file_name):
   try:
     service = build("drive", "v3", credentials=creds)
     file_metadata = {"name": file_name, "parents":["113OEOtoIU3iF3mQ4EwlZZGtPgbZfePqc"]}
-    # media = MediaFileUpload(upload_file, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-    media = upload_file
+    media = MediaFileUpload(upload_file, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    # media = upload_file
     file = (
         service.files()
         .create(supportsTeamDrives=True, body=file_metadata, media_body=media, fields="id")
