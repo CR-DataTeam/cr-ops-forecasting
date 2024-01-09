@@ -21,6 +21,14 @@ creds = service_account.Credentials.from_service_account_file(
                   ]
           )
 
+creds2 = service_account.Credentials.from_service_account_file(
+          'serviceacc.json',
+          scopes=[
+                  'https://www.googleapis.com/auth/spreadsheets'
+                  ]
+          )
+
+
 
 def load_workbook_range(range_string, ws):
     col_start, col_end = re.findall("[A-Z]+", range_string)
@@ -52,7 +60,7 @@ def reformat_add_df_context(df, facility, submission_id):
 
 
 def stored_GET_data(spreadsheetId, spreadsheetRange):   
-    service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
+    service = build('sheets', 'v4', credentials=creds2, cache_discovery=False)
     spreadsheetId = spreadsheetId
     spreadsheetRange = spreadsheetRange
     result = service.spreadsheets().values().get(
