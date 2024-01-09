@@ -21,9 +21,6 @@ creds = service_account.Credentials.from_service_account_file(
                   ]
           )
 
-def RangeValue(ws, rs, cs, re, ce):
-    return(tuple(tuple(ws.cell(row=cs+i, column=rs+j).value for j in range(re-rs+1)) for i in range(ce-cs+1)))
-
 
 def load_workbook_range(range_string, ws):
     col_start, col_end = re.findall("[A-Z]+", range_string)
