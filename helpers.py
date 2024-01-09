@@ -8,7 +8,9 @@ import openpyxl
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_interval
 import re
-from datetime import today
+from datetime import date
+
+today = date.today()
 
 # dd/mm/YY
 current_date = today.strftime('%Y-%m-%d')
