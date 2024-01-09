@@ -67,7 +67,6 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
 if submitted:
     if servline_list != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
         input_validity = True
-        st.success('File uploaded successfully.')
     else:
         input_validity = False
         st.warning('Please fill out form.')
@@ -81,7 +80,8 @@ if submitted:
         asdf = {'serv':servline_select, 'fileid':upfileid}
         sdf = pd.DataFrame(asdf, index=[0])
         sdf
+        st.success('File uploaded successfully.')
 
-        st.write(upfileid)
+        # st.write(upfileid)
         
     
