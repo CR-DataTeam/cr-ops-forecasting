@@ -74,7 +74,7 @@ iteration_calc
 # dfpiv
 
 iterc = h.stored_GET_data(h.ssid_subm, 'Mamm!A1:K')
-filtertest = iterc[iterc['ServiceLine']==servline_select and iterc['Version']==forecast_select]
+filtertest = iterc[iterc['ServiceLine']==servline_select && iterc['Version']==forecast_select]
 filtertest
 st.write(len(filtertest))
 
