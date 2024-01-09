@@ -21,10 +21,15 @@ from tempfile import NamedTemporaryFile
 
 LOGGER = get_logger(__name__)
 
+ssid_subm = ''
+ssid_full = ''
+
 show_pages(
     [
         Page("Hello.py", "Submit File"),
         Page("pages/01_Mamm.py", "Mamm Review"),
+        Page("pages/02_CIS.py",  "CIS Review" ),
+        Page("pages/03_Vein.py", "Vein Review"),
     ]
 )
 
@@ -54,5 +59,5 @@ with col2:
         submitted = st.form_submit_button("Submit")
 
 if uploaded_file is not None:
-    upfileid = h.upload_basic(uploaded_file, 'form_test.xlsx')
+    upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
     st.write(upfileid)
