@@ -64,6 +64,9 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
         'Pineville', 'Prosperity', 'Rock Hill', 'Rosedale', 'Southpark', 
         'Steele Creek', 'Union West', 'University']
 
+
+iteration_calc = h.stored_GET_data(h.ssid_subm, 'Mamm!A2:K')
+
 if submitted:
     if servline_list != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
         input_validity = True
@@ -77,7 +80,7 @@ if submitted:
         # new = h.reformat_add_df_context(df,'Ballantyne','asdfasdfasdf')
         # h.stored_APPEND_data(h.ssid_full,'Mamm!A:P',h.excel_storage_conversion(new))
         upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
-        iteration_calc = h.stored_GET_data(h.ssid_subm, 'Mamm!A2:K')
+        # iteration_calc = h.stored_GET_data(h.ssid_subm, 'Mamm!A2:K')
         asdf = {'ServiceLine':servline_select, 
                 'Year':2024,
                 'Version':forecast_select,
