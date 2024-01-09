@@ -65,8 +65,13 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
         'Steele Creek', 'Union West', 'University']
 
 
-iteration_calc = h.stored_GET_data('10Od0nhz92hKVpuAwXFg45XGRZMz6x8vYf3cPvtxQe5E', 'Mamm!A2:K2')
-iteration_calc
+iteration_calc = h.stored_GET_data(h.ssid_subm, 'Mamm!A2:K2')
+#### Assign GET request to dfpiv.
+test = pd.DataFrame(iteration_calc['values'])
+test.columns = test.iloc[0]
+dfpiv = test[1:]
+dfpiv
+
 
 if submitted:
     if servline_list != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
