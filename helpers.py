@@ -10,10 +10,7 @@ from openpyxl.utils import get_column_interval
 import re
 from datetime import date
 
-today = date.today()
 
-# dd/mm/YY
-current_date = today.strftime('%Y-%m-%d')
 ssid_subm = '10Od0nhz92hKVpuAwXFg45XGRZMz6x8vYf3cPvtxQe5E'
 ssid_full = '1SsrJp5370HOfCURm64vOHIjZnMxmeC5deVZ6bLTEJE4'
 
@@ -26,6 +23,11 @@ creds = service_account.Credentials.from_service_account_file(
                   ]
           )  
 
+
+def today_string():
+    today = date.today()
+    current_date = today.strftime('%Y-%m-%d')
+    return current_date
 
 def load_workbook_range(range_string, ws):
     col_start, col_end = re.findall("[A-Z]+", range_string)
