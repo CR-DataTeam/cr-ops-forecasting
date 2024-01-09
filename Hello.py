@@ -67,17 +67,17 @@ if submitted:
         input_validity = False
         st.warning('Fill out full form.')
 
-if input_validity:
+    if input_validity:
 
-    # data = h.excel_reader_get_data('Mamm 2024 Initial Load.xlsx', fl)
-    # new = h.reformat_add_df_context(df,'Ballantyne','asdfasdfasdf')
-    # h.stored_APPEND_data(h.ssid_full,'Mamm!A:P',h.excel_storage_conversion(new))
-    upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
-    asdf = {'serv':servline_select, 'fileid':upfileid}
-    sdf = pd.DataFrame(asdf, index=[0])
-    sdf
+        # data = h.excel_reader_get_data('Mamm 2024 Initial Load.xlsx', fl)
+        # new = h.reformat_add_df_context(df,'Ballantyne','asdfasdfasdf')
+        # h.stored_APPEND_data(h.ssid_full,'Mamm!A:P',h.excel_storage_conversion(new))
+        upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
+        asdf = {'serv':servline_select, 'fileid':upfileid}
+        sdf = pd.DataFrame(asdf, index=[0])
+        sdf
 
-    st.write(upfileid)
-    
-    submitted.empty()
+        st.write(upfileid)
+        
+        submitted.empty()
     
