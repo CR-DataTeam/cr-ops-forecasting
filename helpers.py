@@ -35,7 +35,7 @@ def upload_basic(upload_file, file_name):
     with NamedTemporaryFile() as f:
         f.write(upload_file)
         
-    media = MediaFileUpload(f.name, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    media = MediaFileUpload(f, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     
     file = (
         service.files()
