@@ -66,6 +66,7 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
 
 
 iteration_calc = h.stored_GET_data(h.ssid_subm, 'Mamm!A2:K')
+iteration_calc
 
 if submitted:
     if servline_list != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
