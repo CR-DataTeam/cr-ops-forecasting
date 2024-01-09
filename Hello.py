@@ -65,7 +65,7 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
         'Steele Creek', 'Union West', 'University']
 
 
-iteration_calc = h.stored_GET_data(h.ssid_subm, 'Mamm!A1:K')
+iteration_calc = h.stored_GET_data(h.ssid_subm, 'Mamm!A1:K')[1]
 iteration_calc
 #### Assign GET request to dfpiv.
 # test = pd.DataFrame(iteration_calc['values'])
@@ -73,8 +73,8 @@ iteration_calc
 # dfpiv = test[1:]
 # dfpiv
 
-iterc = h.stored_GET_data(h.ssid_subm, 'Mamm!A1:K')
-filtertest = iterc[iterc['ServiceLine']==servline_select and iterc['Version']==forecast_select]
+iterc = h.stored_GET_data(h.ssid_subm, 'Mamm!A1:K')[0]
+filtertest = iterc[(iterc['ServiceLine']==servline_select) & (iterc['Version']==forecast_select)]
 filtertest
 st.write(len(filtertest))
 

@@ -76,8 +76,8 @@ def stored_GET_data(spreadsheetId, spreadsheetRange):
                                                 ).execute()
     df = pd.DataFrame(result['values'])
     df.columns = df.iloc[0]
-    dfpiv = df
-    return dfpiv
+    dfpiv = df[1:]
+    return df, dfpiv
     
 
 def stored_SET_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):  
