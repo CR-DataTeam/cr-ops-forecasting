@@ -68,13 +68,10 @@ new
 # h.stored_APPEND_data(h.ssid_full,'Mamm!A:P',h.excel_storage_conversion(new))
 sdf = pd.DataFrame({})
 
-
-if uploaded_file is None:
+if uploaded_file is not None:
+    upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
     sdf['servline'] = servline_select
     sdf['fileid'] = upfileid
     sdf
-
-if uploaded_file is not None:
-    upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
     st.write(upfileid)
     
