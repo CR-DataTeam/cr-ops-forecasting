@@ -65,7 +65,10 @@ df = data['Ballantyne']
 df
 new = h.reformat_add_df_context(df,'Ballantyne','asdfasdfasdf')
 new
-h.stored_APPEND_data(h.ssid_full,'Mamm!A:P',h.excel_storage_conversion(new))
+# h.stored_APPEND_data(h.ssid_full,'Mamm!A:P',h.excel_storage_conversion(new))
+sdf = pd.DataFrame({})
+sdf['servline'] = servline_select
+sdf
 
 if uploaded_file is not None:
     upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
