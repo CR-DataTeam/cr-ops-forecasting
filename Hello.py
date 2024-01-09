@@ -22,17 +22,19 @@ from tempfile import NamedTemporaryFile
 LOGGER = get_logger(__name__)
 
 # Optional -- adds the title and icon to the current page
-st.set_page_config(
-     page_title="Forecasting Tool",
-     layout="wide"
-     )
+# st.set_page_config(
+#      page_title="Forecasting Tool",
+#      layout="wide"
+#      )
+
+add_page_title()
 
 show_pages(
     [
-        Page("./Hello.py", "Submit File", ''),
-        Page("./pages/01_Mamm.py", "Mamm Review", ''),
-        Page("./pages/02_CIS.py",  "CIS Review" , ''),
-        Page("./pages/03_Vein.py", "Vein Review", ''),
+        Page("Hello.py", "Submit File", ''),
+        Page("pages/01_Mamm.py", "Mamm Review", ''),
+        Page("pages/02_CIS.py",  "CIS Review" , ''),
+        Page("pages/03_Vein.py", "Vein Review", ''),
     ]
 )
 
@@ -65,9 +67,10 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
 if submitted:
     if servline_list != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
         input_validity = True
+        st.success('File uploaded successfully.')
     else:
         input_validity = False
-        st.warning('Fill out full form.')
+        st.warning('Please fill out form.')
 
     if input_validity:
 
@@ -81,5 +84,4 @@ if submitted:
 
         st.write(upfileid)
         
-        submitted.empty()
     
