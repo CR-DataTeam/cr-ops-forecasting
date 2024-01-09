@@ -33,7 +33,7 @@ def upload_basic(upload_file, file_name):
     file_metadata = {"name": file_name, "parents":["113OEOtoIU3iF3mQ4EwlZZGtPgbZfePqc"]}
     
     with NamedTemporaryFile() as f:
-        f.write(upload_file.getvalue())
+        f.write(upload_file)
         
     media = MediaFileUpload(f.name, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     
