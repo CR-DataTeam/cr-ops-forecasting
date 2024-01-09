@@ -22,19 +22,19 @@ from tempfile import NamedTemporaryFile
 LOGGER = get_logger(__name__)
 
 # Optional -- adds the title and icon to the current page
-# st.set_page_config(
-#      page_title="Forecasting Tool",
-#      layout="wide"
-#      )
+st.set_page_config(
+     page_title="Forecasting Tool",
+     layout="wide"
+     )
 
-add_page_title()
+# add_page_title()
 
 show_pages(
     [
-        Page("Hello.py", "Submit File", ''),
-        Page("pages/01_Mamm.py", "Mamm Review", ''),
-        Page("pages/02_CIS.py",  "CIS Review" , ''),
-        Page("pages/03_Vein.py", "Vein Review", ''),
+        Page("Hello.py", "Submit File"),
+        Page("pg01_Mamm.py", "Mamm Review"),
+        Page("pg02_CIS.py",  "CIS Review" ),
+        Page("pg03_Vein.py", "Vein Review"),
     ]
 )
 
