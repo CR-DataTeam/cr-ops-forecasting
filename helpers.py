@@ -48,12 +48,8 @@ def excel_storage_conversion(df):
     return { 'values': goog }
 
 def reformat_add_df_context(df, facility, submission_id):
-    df.insert(loc=0,
-              column='Facility',
-              value=facility)
-    df.insert(loc=1,
-              column='submission_id',
-              value=submission_id)
+    df['Facility'] = facility
+    df['submission_id'] = submission_id
     return df
 
 
