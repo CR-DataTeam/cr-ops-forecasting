@@ -50,13 +50,14 @@ def excel_storage_conversion(df):
 def reformat_add_df_context(df, facility, submission_id):
     df['Facility'] = facility
     df['submission_id'] = submission_id
+    df=df[1:]
     return df
 
 
 def stored_GET_data(spreadsheetId, spreadsheetRange):   
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
-    spreadsheetId = spreadsheetId  # '1-zYgl-7ffj8cV2N80aICDHHKHfqyQX5rE3HXDcgSsfc'
-    spreadsheetRange = spreadsheetRange  # 'CurrentFacilityValues!A1:BQ321'
+    spreadsheetId = spreadsheetId
+    spreadsheetRange = spreadsheetRange
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheetId, 
         range=spreadsheetRange).execute()
