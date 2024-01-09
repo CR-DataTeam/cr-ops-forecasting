@@ -25,8 +25,7 @@ def upload_basic(upload_file, file_name):
     
     with NamedTemporaryFile(dir='.', suffix='.xlsx') as f:
       f.write(upload_file.getbuffer())
-        
-    media = MediaFileUpload(f.name, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+      media = MediaFileUpload(f.name, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     
     file = (
         service.files()
