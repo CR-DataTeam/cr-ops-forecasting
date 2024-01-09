@@ -8,8 +8,10 @@ import openpyxl
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_interval
 import re
+from datetime import today
 
-
+# dd/mm/YY
+current_date = today.strftime('%Y-%m-%d')
 ssid_subm = '10Od0nhz92hKVpuAwXFg45XGRZMz6x8vYf3cPvtxQe5E'
 ssid_full = '1SsrJp5370HOfCURm64vOHIjZnMxmeC5deVZ6bLTEJE4'
 
