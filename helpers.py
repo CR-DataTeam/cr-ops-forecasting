@@ -52,10 +52,10 @@ def reformat_add_df_context(df, facility, submission_id):
     df['submission_id'] = submission_id
     df['Facility'] = df['A']
     df['Facility'] = facility
-    col_order = df.columns.tolist()
-    new_cols = ['submission_id', 'Facility']
-    new_col_order = new_cols.extend(col_order)
-    df = df[new_col_order]
+    # col_order = df.columns.tolist()
+    # new_cols = ['submission_id', 'Facility']
+    # new_col_order = new_cols.extend(col_order)
+    # df = df[new_col_order]
     return df
 
 
