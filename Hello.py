@@ -77,7 +77,18 @@ if submitted:
         # new = h.reformat_add_df_context(df,'Ballantyne','asdfasdfasdf')
         # h.stored_APPEND_data(h.ssid_full,'Mamm!A:P',h.excel_storage_conversion(new))
         upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
-        asdf = {'serv':servline_select, 'fileid':upfileid}
+        asdf = {'ServiceLine':servline_select, 
+                'Year':2024,
+                'Version':forecast_select,
+                'FunctionalArea':fxarea_select,
+                'Submitter':editor_entry,
+                'SubmissionNotes':note_entry,
+                'Timestamp':'placeholder',
+                'TimestampDate':'placeholder',
+                'SubmissionID':upfileid,
+                'SubmissionTitle':'placeholder',
+                'Iteration':1,
+                }
         sdf = pd.DataFrame(asdf, index=[0])
         sdf
         st.success('File uploaded successfully.')
