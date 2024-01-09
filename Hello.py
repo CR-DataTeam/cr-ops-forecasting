@@ -69,7 +69,7 @@ if uploaded_file is not None:
     # h.stored_APPEND_data(h.ssid_full,'Mamm!A:P',h.excel_storage_conversion(new))
     upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
     asdf = {'serv':servline_select, 'fileid':upfileid}
-    sdf = pd.DataFrame(asdf)
+    sdf = pd.DataFrame(asdf, index=[0])
     sdf
 
     st.write(upfileid)
