@@ -32,10 +32,10 @@ def upload_basic(upload_file, file_name):
     service = build("drive", "v3", credentials=creds)
     file_metadata = {"name": file_name, "parents":["113OEOtoIU3iF3mQ4EwlZZGtPgbZfePqc"]}
     
-    with NamedTemporaryFile() as f:
-        f.write(upload_file)
+    with NamedTemporaryFile(dir='.', suffix='.xlsx') as f:
+      f.write(upload_file.getbuffer())
         
-    media = MediaFileUpload(f, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    media = MediaFileUpload(f.name, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     
     file = (
         service.files()

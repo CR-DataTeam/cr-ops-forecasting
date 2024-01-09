@@ -53,10 +53,5 @@ with col2:
         # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
 
-
-
 if uploaded_file is not None:
-    # To read file as bytes:
-    bytes_data = uploaded_file
-    # h.upload_basic(bytes_data, 'form_test.xlsx')
-    print(bytes_data)
+    h.upload_basic(uploaded_file, 'form_test.xlsx')
