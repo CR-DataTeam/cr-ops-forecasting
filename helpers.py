@@ -17,14 +17,14 @@ current_date = today.strftime('%Y-%m-%d')
 ssid_subm = '10Od0nhz92hKVpuAwXFg45XGRZMz6x8vYf3cPvtxQe5E'
 ssid_full = '1SsrJp5370HOfCURm64vOHIjZnMxmeC5deVZ6bLTEJE4'
 
-
-creds2 = service_account.Credentials.from_service_account_file(
+creds = service_account.Credentials.from_service_account_file(
           'serviceacc.json',
-          scopes=[
+          scopes=['https://www.googleapis.com/auth/drive.file',
+                  'https://www.googleapis.com/auth/drive',
+                  'https://www.googleapis.com/auth/drive.metadata',
                   'https://www.googleapis.com/auth/spreadsheets'
                   ]
-          )
-
+          )  
 
 
 def load_workbook_range(range_string, ws):
