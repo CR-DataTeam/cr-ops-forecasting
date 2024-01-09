@@ -48,12 +48,12 @@ def excel_storage_conversion(df):
     return { 'values': goog }
 
 def reformat_add_df_context(df, facility, submission_id):
+    df.loc[:,'submission_id'] = submission_id
+    df.loc[:,'Facility'] = facility
     col_order = df.columns.tolist()
     new_cols = ['submission_id', 'Facility']
     new_col_order = new_cols.append(col_order)
     df = df[new_col_order]
-    df['submission_id'] = submission_id
-    df['Facility'] = facility
     return df
 
 
