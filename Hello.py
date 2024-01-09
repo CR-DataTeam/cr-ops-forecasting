@@ -40,18 +40,19 @@ col1, col2, col3 = st.columns([.25,1,.25])
 
 servline_list = ['Service Line','Mamm','CIS','Vein']
 forecast_list = ['Forecast Version','00+12','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
-fxarea_list = ['Functional Area', 'Ops', 'Finance', 'Marketing', 'Other']
+fxarea_list   = ['Functional Area', 'Ops', 'Finance', 'Marketing', 'Other']
 with col2:
     with st.form("my_form"):
         servline_select = st.selectbox('Service Line', servline_list)
         forecast_select = st.selectbox('Forecast Version', forecast_list)
-        fxarea_select     = st.selectbox('Functional Area', fxarea_list)
-        editor_entry = st.text_input('Name')
-        note_entry   = st.text_input('Submission Note')
-        uploaded_file = st.file_uploader("Upload File")
+        fxarea_select   = st.selectbox('Functional Area', fxarea_list)
+        editor_entry    = st.text_input('Name')
+        note_entry      = st.text_input('Submission Note')
+        uploaded_file   = st.file_uploader("Upload File")
 
         # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
 
 if uploaded_file is not None:
-    h.upload_basic(uploaded_file, 'form_test.xlsx')
+    upfileid = h.upload_basic(uploaded_file, 'form_test.xlsx')
+    st.write(upfileid)
