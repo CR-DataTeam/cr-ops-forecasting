@@ -44,7 +44,7 @@ servline_list = ['Service Line','Mamm','CIS','Vein']
 forecast_list = ['Forecast Version','00+12','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
 fxarea_list   = ['Functional Area', 'Ops', 'Finance', 'Marketing', 'Other']
 with col2:
-    with st.form("my_form", clear_on_submit=True):
+    with st.form("my_form")  # , clear_on_submit=True):
         servline_select = st.selectbox('Service Line', servline_list)
         forecast_select = st.selectbox('Forecast Version', forecast_list)
         fxarea_select   = st.selectbox('Functional Area', fxarea_list)
@@ -60,11 +60,12 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
         'Pineville', 'Prosperity', 'Rock Hill', 'Rosedale', 'Southpark', 
         'Steele Creek', 'Union West', 'University']
 
-if servline_list != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
-    input_validity = True
-else:
-    input_validity = False
-    st.write('Fill out full form.')
+if submitted:
+    if servline_list != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
+        input_validity = True
+    else:
+        input_validity = False
+        st.warning('Fill out full form.')
 
 if input_validity:
 
@@ -77,4 +78,6 @@ if input_validity:
     sdf
 
     st.write(upfileid)
+    
+    submitted.empty()
     
