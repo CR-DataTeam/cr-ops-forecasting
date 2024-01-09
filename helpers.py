@@ -51,7 +51,7 @@ def reformat_add_df_context(df, facility, submission_id):
     df.insert(loc=0,
               column='Facility',
               value=facility)
-    df.insert(loc=0,
+    df.insert(loc=1,
               column='submission_id',
               value=submission_id)
     return df
