@@ -60,9 +60,13 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
         'Pineville', 'Prosperity', 'Rock Hill', 'Rosedale', 'Southpark', 
         'Steele Creek', 'Union West', 'University']
 
+if servline_list != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
+    input_validity = True
+else:
+    input_validity = False
+    st.write('Fill out full form.')
 
-
-if uploaded_file is not None:
+if input_validity:
 
     # data = h.excel_reader_get_data('Mamm 2024 Initial Load.xlsx', fl)
     # new = h.reformat_add_df_context(df,'Ballantyne','asdfasdfasdf')
