@@ -51,7 +51,7 @@ def reformat_add_df_context(df, facility, submission_id):
     df['submission_id'] = submission_id
     df['Facility'] = facility
 
-    col_order = df.columns
+    col_order = df.columns.tolist()
     new_cols = ['submission_id', 'Facility']
     new_col_order = new_cols.append(col_order)
     df.columns = new_col_order
