@@ -60,15 +60,18 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
         'Pineville', 'Prosperity', 'Rock Hill', 'Rosedale', 'Southpark', 
         'Steele Creek', 'Union West', 'University']
 
-data = h.excel_reader_get_data('Mamm 2024 Initial Load.xlsx', fl)
-df = data['Ballantyne']
-df
-new = h.reformat_add_df_context(df,'Ballantyne','asdfasdfasdf')
-new
-# h.stored_APPEND_data(h.ssid_full,'Mamm!A:P',h.excel_storage_conversion(new))
-sdf = pd.DataFrame({})
+
 
 if uploaded_file is not None:
+
+    data = h.excel_reader_get_data('Mamm 2024 Initial Load.xlsx', fl)
+    df = data['Ballantyne']
+    df
+    new = h.reformat_add_df_context(df,'Ballantyne','asdfasdfasdf')
+    new
+    # h.stored_APPEND_data(h.ssid_full,'Mamm!A:P',h.excel_storage_conversion(new))
+    sdf = pd.DataFrame({})
+
     upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
     sdf['servline'] = servline_select
     sdf['fileid'] = upfileid
