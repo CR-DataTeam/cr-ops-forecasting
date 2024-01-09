@@ -68,7 +68,10 @@ def stored_GET_data(spreadsheetId, spreadsheetRange):
                                                 spreadsheetId=spreadsheetId, 
                                                 range=spreadsheetRange
                                                 ).execute()
-    return result
+    df = pd.DataFrame(result['values'])
+    df.columns = df.iloc[0]
+    dfpiv = df[1:]
+    return dfpiv
     
 
 def stored_SET_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):  
