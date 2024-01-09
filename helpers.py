@@ -12,14 +12,7 @@ import re
 
 ssid_subm = '10Od0nhz92hKVpuAwXFg45XGRZMz6x8vYf3cPvtxQe5E'
 ssid_full = '1SsrJp5370HOfCURm64vOHIjZnMxmeC5deVZ6bLTEJE4'
-creds = service_account.Credentials.from_service_account_file(
-          'serviceacc.json',
-          scopes=['https://www.googleapis.com/auth/drive.file',
-                  'https://www.googleapis.com/auth/drive',
-                  'https://www.googleapis.com/auth/drive.metadata',
-                  'https://www.googleapis.com/auth/spreadsheets'
-                  ]
-          )
+
 
 creds2 = service_account.Credentials.from_service_account_file(
           'serviceacc.json',
@@ -60,16 +53,33 @@ def reformat_add_df_context(df, facility, submission_id):
 
 
 def stored_GET_data(spreadsheetId, spreadsheetRange):   
-    service = build('sheets', 'v4', credentials=creds2, cache_discovery=False)
+    creds = service_account.Credentials.from_service_account_file(
+          'serviceacc.json',
+          scopes=['https://www.googleapis.com/auth/drive.file',
+                  'https://www.googleapis.com/auth/drive',
+                  'https://www.googleapis.com/auth/drive.metadata',
+                  'https://www.googleapis.com/auth/spreadsheets'
+                  ]
+          )
+    service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
     spreadsheetId = spreadsheetId
     spreadsheetRange = spreadsheetRange
     result = service.spreadsheets().values().get(
                                                 spreadsheetId=spreadsheetId, 
                                                 range=spreadsheetRange
                                                 ).execute()
+    return result
     
 
-def stored_SET_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):   
+def stored_SET_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):  
+    creds = service_account.Credentials.from_service_account_file(
+          'serviceacc.json',
+          scopes=['https://www.googleapis.com/auth/drive.file',
+                  'https://www.googleapis.com/auth/drive',
+                  'https://www.googleapis.com/auth/drive.metadata',
+                  'https://www.googleapis.com/auth/spreadsheets'
+                  ]
+          ) 
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
     spreadsheetId = spreadsheetId  # '1-zYgl-7ffj8cV2N80aICDHHKHfqyQX5rE3HXDcgSsfc'
     spreadsheetRange = spreadsheetRange  # 'CurrentFacilityValues!A1:BQ321'
@@ -83,7 +93,15 @@ def stored_SET_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USE
                                               ).execute()
     
 
-def stored_APPEND_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):   
+def stored_APPEND_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'): 
+    creds = service_account.Credentials.from_service_account_file(
+          'serviceacc.json',
+          scopes=['https://www.googleapis.com/auth/drive.file',
+                  'https://www.googleapis.com/auth/drive',
+                  'https://www.googleapis.com/auth/drive.metadata',
+                  'https://www.googleapis.com/auth/spreadsheets'
+                  ]
+          )  
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
     spreadsheetId = spreadsheetId  # '1-zYgl-7ffj8cV2N80aICDHHKHfqyQX5rE3HXDcgSsfc'
     spreadsheetRange = spreadsheetRange  # 'CurrentFacilityValues!A:BQ'
