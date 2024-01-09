@@ -61,7 +61,10 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
         'Steele Creek', 'Union West', 'University']
 
 data = h.excel_reader_get_data('Mamm 2024 Initial Load.xlsx', fl)
-data['Ballantyne']
+df = data['Ballantyne']
+df
+new = h.reformat_add_df_context(df,'Ballantyne','asdfasdfasdf')
+new
 
 if uploaded_file is not None:
     upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')

@@ -47,6 +47,16 @@ def excel_storage_conversion(df):
     goog = df.values.tolist()
     return { 'values': goog }
 
+def reformat_add_df_context(df, facility, submission_id):
+    df['submission_id'] = submission_id
+    df['Facility'] = facility
+
+    col_order = df.columns
+    new_cols = ['submission_id', 'Facility']
+    new_col_order = new_cols.append(col_order)
+    df.columns = new_col_order
+    return df
+
 
 def stored_GET_data(spreadsheetId, spreadsheetRange):   
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
