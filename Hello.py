@@ -69,9 +69,12 @@ new
 sdf = pd.DataFrame({})
 
 
-if uploaded_file is not None:
-    upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
-    st.write(upfileid)
+if uploaded_file is None:
     sdf['servline'] = servline_select
     sdf['fileid'] = upfileid
     sdf
+
+if uploaded_file is not None:
+    upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
+    st.write(upfileid)
+    
