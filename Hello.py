@@ -14,19 +14,21 @@
 
 import streamlit as st
 from streamlit.logger import get_logger
-from st_pages import Page, show_pages
+from st_pages import Page, show_pages, add_page_title
 import helpers as h
 import pandas as pd
 from tempfile import NamedTemporaryFile
 
 LOGGER = get_logger(__name__)
 
+add_page_title()
+
 show_pages(
     [
-        Page("Hello.py", "Submit File"),
-        Page("pages/01_Mamm.py", "Mamm Review"),
-        Page("pages/02_CIS.py",  "CIS Review" ),
-        Page("pages/03_Vein.py", "Vein Review"),
+        Page("./Hello.py", "Submit File", ''),
+        Page("./pages/01_Mamm.py", "Mamm Review", ''),
+        Page("./pages/02_CIS.py",  "CIS Review" , ''),
+        Page("./pages/03_Vein.py", "Vein Review", ''),
     ]
 )
 
