@@ -66,11 +66,12 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
 
 
 iteration_calc = h.stored_GET_data(h.ssid_full, 'Mamm!A2:K2')
+iteration_calc
 #### Assign GET request to dfpiv.
-test = pd.DataFrame(iteration_calc['values'])
-test.columns = test.iloc[0]
-dfpiv = test[1:]
-dfpiv
+# test = pd.DataFrame(iteration_calc['values'])
+# test.columns = test.iloc[0]
+# dfpiv = test[1:]
+# dfpiv
 
 
 if submitted:
