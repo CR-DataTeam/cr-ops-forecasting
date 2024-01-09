@@ -5,3 +5,4 @@ pydeck
 streamlit
 st-pages
 google_api_python_client
+openpyxl

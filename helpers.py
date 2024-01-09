@@ -2,9 +2,16 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
-import pandas as pd
 from tempfile import NamedTemporaryFile
+import pandas as pd
+import openpyxl
+from openpyxl import load_workbook
+from openpyxl.utils import get_column_interval
+import re
 
+
+ssid_subm = '10Od0nhz92hKVpuAwXFg45XGRZMz6x8vYf3cPvtxQe5E'
+ssid_full = '1SsrJp5370HOfCURm64vOHIjZnMxmeC5deVZ6bLTEJE4'
 creds = service_account.Credentials.from_service_account_file(
           'serviceacc.json',
           scopes=['https://www.googleapis.com/auth/drive.file',
@@ -13,6 +20,33 @@ creds = service_account.Credentials.from_service_account_file(
                   'https://www.googleapis.com/auth/spreadsheets'
                   ]
           )
+
+def RangeValue(ws, rs, cs, re, ce):
+    return(tuple(tuple(ws.cell(row=cs+i, column=rs+j).value for j in range(re-rs+1)) for i in range(ce-cs+1)))
+
+
+def load_workbook_range(range_string, ws):
+    col_start, col_end = re.findall("[A-Z]+", range_string)
+
+    data_rows = []
+    for row in ws[range_string]:
+        data_rows.append([cell.value for cell in row])
+
+    return pd.DataFrame(data_rows, columns=get_column_interval(col_start, col_end))
+
+
+def excel_reader_get_data(excel_file, facility_list):
+    wb = openpyxl.load_workbook(excel_file, read_only=True)
+    data = {}
+    for facility in facility_list:
+       ws = wb[facility]
+       data[facility] = load_workbook_range(range_string='A1:N17', ws=ws)
+    return data
+
+def excel_storage_conversion(df):
+    goog = df.values.tolist()
+    return { 'values': goog }
+
 
 def stored_GET_data(spreadsheetId, spreadsheetRange):   
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)

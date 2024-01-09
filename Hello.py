@@ -21,9 +21,6 @@ from tempfile import NamedTemporaryFile
 
 LOGGER = get_logger(__name__)
 
-ssid_subm = ''
-ssid_full = ''
-
 show_pages(
     [
         Page("Hello.py", "Submit File"),
