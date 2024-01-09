@@ -65,7 +65,7 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
         'Steele Creek', 'Union West', 'University']
 
 
-iteration_calc = h.stored_GET_data(h.ssid_subm, 'Mamm!A2:K2')
+iteration_calc = h.stored_GET_data('10Od0nhz92hKVpuAwXFg45XGRZMz6x8vYf3cPvtxQe5E', 'Mamm!A2:K2')
 iteration_calc
 
 if submitted:

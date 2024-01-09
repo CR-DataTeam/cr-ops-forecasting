@@ -59,8 +59,9 @@ def stored_GET_data(spreadsheetId, spreadsheetRange):
     spreadsheetId = spreadsheetId
     spreadsheetRange = spreadsheetRange
     result = service.spreadsheets().values().get(
-        spreadsheetId=spreadsheetId, 
-        range=spreadsheetRange).execute()
+                                                spreadsheetId=spreadsheetId, 
+                                                range=spreadsheetRange
+                                                ).execute()
     
 
 def stored_SET_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):   
