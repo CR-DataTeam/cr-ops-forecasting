@@ -21,7 +21,11 @@ from tempfile import NamedTemporaryFile
 
 LOGGER = get_logger(__name__)
 
-add_page_title()
+# Optional -- adds the title and icon to the current page
+st.set_page_config(
+     page_title="Forecasting Tool",
+     layout="wide"
+     )
 
 show_pages(
     [
@@ -32,11 +36,7 @@ show_pages(
     ]
 )
 
-# Optional -- adds the title and icon to the current page
-st.set_page_config(
-     page_title="Forecasting Tool",
-     layout="wide"
-     )
+
 
 st.write("# Forecasting Tool")
 
