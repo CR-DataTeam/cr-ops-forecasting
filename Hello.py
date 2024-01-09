@@ -55,6 +55,14 @@ with col2:
         # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
 
+fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
+        'McDowell', 'MCP', 'MMP', 'Mobile', 'Monroe', 'Mooresville', 
+        'Pineville', 'Prosperity', 'Rock Hill', 'Rosedale', 'Southpark', 
+        'Steele Creek', 'Union West', 'University']
+
+data = h.excel_reader_get_data('Mamm 2024 Initial Load.xlsx', fl)
+data['Ballantyne']
+
 if uploaded_file is not None:
     upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
     st.write(upfileid)
