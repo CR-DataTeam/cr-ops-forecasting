@@ -58,9 +58,11 @@ def excel_storage_conversion(df):
     goog = df.values.tolist()
     return { 'values': goog }
 
-def reformat_add_df_context(df, facility, submission_id):
+def reformat_add_df_context(df, facility, submission_id, forecast_select, itnum):
     df['Facility'] = facility
     df['submission_id'] = submission_id
+    df['ForecastVersion'] = forecast_select
+    df['IterationNum'] = itnum
     df=df[1:]
     return df
 
@@ -198,24 +200,12 @@ def create_clean_copy(new_file_name, df_dict, facility_list):
     
     return fileid
 
-
-# Create a workbook, do the shit you gotta do
-
-
-# Save the workbook to the buffer, as if it were a file on disk opened for writing bytes
-
-
-# Get all the bytes in the buffer.
-# It's functionally the same as buffer.seek(0) then buffer.read()
-
-    upload_file_to_drive(wb, new_file_name+' (clean)'+'.xlsx')
-
-def final_combine_and_store_all_facilities(df_dict, facility_list, submission_id,serviceline):
+def final_combine_and_store_all_facilities(df_dict, facility_list, submission_id, serviceline, forecast_select, itnum):
    for facility in facility_list:
       df = df_dict[facility]
-      df = reformat_add_df_context(df, facility, submission_id)
+      df = reformat_add_df_context(df, facility, submission_id, forecast_select, itnum)
       body = excel_storage_conversion(df)
-      stored_APPEND_data(ssid_full, serviceline+'!A:P', body) ############## in progress
+      stored_APPEND_data(ssid_full, serviceline+'!A:R', body) ############## in progress
       
 def get_iteration(service_line, forecast_month):
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
