@@ -50,8 +50,8 @@ fxarea_list   = ['Functional Area', 'Ops', 'Finance', 'Marketing', 'Other']
 with col2:
     with st.form("my_form"):  # , clear_on_submit=True):
         servline_select = st.selectbox('Service Line', servline_list, index=None)
-        forecast_select = st.selectbox('Forecast Version', forecast_list)
-        fxarea_select   = st.selectbox('Functional Area', fxarea_list)
+        forecast_select = st.selectbox('Forecast Version', forecast_list, index=None)
+        fxarea_select   = st.selectbox('Functional Area', fxarea_list, index=None)
         editor_entry    = st.text_input('Name')
         note_entry      = st.text_input('Submission Note')
         uploaded_file   = st.file_uploader("Upload File")
@@ -73,7 +73,7 @@ facilities = {
 
 
 if submitted:
-    if servline_select != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
+    if servline_select is not None and forecast_select is not None and fxarea_select is not None and editor_entry is not None and uploaded_file is not None:
         input_validity = True
     else:
         input_validity = False
