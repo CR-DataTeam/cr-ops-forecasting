@@ -44,9 +44,9 @@ st.write("# Forecasting Tool")
 
 col1, col2, col3 = st.columns([.25,1,.25])
 
-servline_list = ['Service Line','Mamm','CIS','Vein']
-forecast_list = ['Forecast Version','00+12','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
-fxarea_list   = ['Functional Area', 'Ops', 'Finance', 'Marketing', 'Other']
+servline_list = ['Mamm','CIS','Vein']
+forecast_list = ['00+12','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
+fxarea_list   = ['Ops', 'Finance', 'Marketing', 'Other']
 with col2:
     with st.form("my_form"):  # , clear_on_submit=True):
         servline_select = st.selectbox('Service Line', servline_list, index=None)
@@ -82,7 +82,6 @@ if submitted:
     if input_validity:
         facility_list = facilities[servline_select]
 
-        # data = h.excel_reader_get_data('Mamm 2024 Initial Load.xlsx', fl)
         itnum = h.get_iteration(servline_select,forecast_select)+1
         filenum = h.number_naming_convention(itnum)
         filename = filenum + ' - ' + servline_select + ' - ' + forecast_select + \
