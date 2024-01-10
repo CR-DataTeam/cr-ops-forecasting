@@ -16,3 +16,4 @@ forecast_list = ['Forecast Version','00+12','01+11','02+10','03+09','04+08','05+
 forecast_select = st.selectbox('Forecast Version', forecast_list, index=1)
 
 df = h.get_iteration(service_line='Mamm', forecast_month=forecast_select)
+df
