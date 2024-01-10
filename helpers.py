@@ -144,7 +144,7 @@ def final_combine_and_store_all_facilities(excel_file, facility_list, submission
       stored_APPEND_data(ssid_full, 'Mamm!A:P', body)
       
 def get_iteration(service_line, forecast_month):
-   subm_df = stored_GET_data(ssid_subm, 'Mamm!A1:K')[0]
+   subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
    filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month)]
    return len(filtered_list)
 
@@ -154,3 +154,9 @@ def number_naming_convention(num):
    for x in range(4-len(nums)):
        return_str += '0'
    return return_str + nums
+
+
+def add_submission_line(metadata):
+    metadata_df = pd.DataFrame(metadata, index=[0])
+    goog = excel_storage_conversion(metadata_df)
+    stored_APPEND_data(ssid_subm, 'All!A:K', goog)

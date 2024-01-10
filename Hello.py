@@ -77,7 +77,7 @@ if submitted:
 
     if input_validity:
         # data = h.excel_reader_get_data('Mamm 2024 Initial Load.xlsx', fl)
-        itnum = h.get_iteration(servline_select,forecast_select)
+        itnum = h.get_iteration(servline_select,forecast_select)+1
         filenum = h.number_naming_convention(itnum)
         filename = filenum + ' - ' + servline_select + ' - ' + forecast_select + \
                     ' - ' + fxarea_select + ' - ' + h.today_string_file()
@@ -93,7 +93,7 @@ if submitted:
                 'SubmissionTitle':'placeholder',
                 'Iteration':itnum,
                 }
-        metadata_df = pd.DataFrame(upload_metadata, index=[0])
+        h.add_submission_line(upload_metadata)
         st.write(upfileid)
         st.write(filename)
         # h.final_combine_and_store_all_facilities(excel_file, facility_list, submission_id)     
