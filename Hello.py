@@ -95,7 +95,7 @@ if submitted:
                 'Iteration':itnum,
                 }
         h.add_submission_line(upload_metadata)
-        h.create_clean_copy(filename, facility_list)
+        h.create_clean_copy(filename, uploaded_file, facility_list)
         st.write(upfileid)
         st.write(filename)
         # h.final_combine_and_store_all_facilities(excel_file, facility_list, submission_id)     

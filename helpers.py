@@ -10,6 +10,7 @@ from openpyxl.utils import get_column_interval
 import re
 from datetime import date
 from io import BytesIO
+import io
 import shutil
 from openpyxl.utils.dataframe import dataframe_to_rows
 
@@ -157,15 +158,57 @@ def convert_df(excel_file, facility_list):
     writer.close()
     return output.getvalue()
 
-def create_clean_copy(new_file_name, facility_list):
-    shutil.copy("Mamm_Template.xlsx", new_file_name+'.xlsx')
-    df_dict = excel_reader_get_data(new_file_name+'.xlsx', facility_list)
-    wb = load_workbook(new_file_name+'.xlsx') 
-    for facility in facility_list:
-        df = df_dict[facility][:,2:] 
-        ws = wb[facility] 
-        df_to_excel(df, ws)
-    wb.save
+def create_clean_copy(new_file_name, excel_file, facility_list):
+    buffer = io.BytesIO()
+    service = build("drive", "v3", credentials=creds)
+    try:
+        df_dict = excel_reader_get_data(excel_file, facility_list)
+        wb = load_workbook(new_file_name+'.xlsx')
+        for facility in facility_list:
+            df = df_dict[facility][:,2:] 
+            ws = wb[facility] 
+            df_to_excel(df, ws) 
+        wb.save(buffer)
+        buffervals = buffer.getvalue()
+        
+        file_metadata = {"name": new_file_name, "parents":["113OEOtoIU3iF3mQ4EwlZZGtPgbZfePqc"]}
+        with NamedTemporaryFile(dir='.', suffix='.xlsx') as f:
+            f.write(buffervals)
+            media = MediaFileUpload(f.name, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") 
+        file = (
+            service.files()
+            .create(supportsTeamDrives=True, body=file_metadata, media_body=media, fields="id")
+            .execute()
+        )
+    except HttpError as error:
+        print(f"An error occurred: {error}")
+        file = None
+
+    fileid = file.get("id")
+    permission1 = {
+        'type': 'user',
+        'role': 'writer',
+        'emailAddress': 'charlotteradiologydatateam@gmail.com',  # Please set your email of Google account.
+    }
+    service.permissions().create(fileId=fileid, body=permission1).execute()
+    permission2 = {
+            'type': 'anyone',
+            'role': 'writer',
+        }
+    service.permissions().create(fileId=fileid, body=permission2).execute()
+    
+    return fileid
+
+
+# Create a workbook, do the shit you gotta do
+
+
+# Save the workbook to the buffer, as if it were a file on disk opened for writing bytes
+
+
+# Get all the bytes in the buffer.
+# It's functionally the same as buffer.seek(0) then buffer.read()
+
     upload_file_to_drive(wb, new_file_name+' (clean)'+'.xlsx')
 
 def final_combine_and_store_all_facilities(excel_file, facility_list, submission_id):
