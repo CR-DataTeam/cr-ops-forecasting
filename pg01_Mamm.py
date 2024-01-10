@@ -20,8 +20,8 @@ forecast_select = st.selectbox('Forecast Version', forecast_list, index=1)
 
 subm_df = h.stored_GET_data(h.ssid_subm, 'All!A1:K')[0]
 df = subm_df[(subm_df['ServiceLine']=='Mamm') & (subm_df['Version']==forecast_select)]
-df['url_o'] = df.SubmissionID.apply(lambda x: make_clickable('https://docs.google.com/spreadsheets/d/' + x + '/export?format=xlsx'))
-df['url_c'] = df.CleanCopyID.apply(lambda x: make_clickable('https://docs.google.com/spreadsheets/d/' + x + '/export?format=xlsx'))
+df['url_o'] = df.SubmissionID.apply(lambda x: 'https://docs.google.com/spreadsheets/d/' + x + '/export?format=xlsx')
+df['url_c'] = df.CleanCopyID.apply(lambda x: 'https://docs.google.com/spreadsheets/d/' + x + '/export?format=xlsx')
 df['uname_c'] = df['SubmissionTitle'] + ' (clean)'
 df['Download Original'] = df.apply(lambda x: make_clickable(x['url_o'], x['SubmissionTitle']), axis=1)
 df['Download Clean'] = df.apply(lambda x: make_clickable(x['url_c'], x['uname_c']), axis=1)
