@@ -158,15 +158,15 @@ def convert_df(excel_file, facility_list):
     return output.getvalue()
 
 def create_clean_copy(new_file_name, facility_list):
-    shutil.copy("Mamm_Template.xlsx", new_file_name)
-    df_dict = excel_reader_get_data(new_file_name, facility_list)
-    wb = load_workbook(new_file_name) 
+    shutil.copy("Mamm_Template.xlsx", new_file_name+'.xlsx')
+    df_dict = excel_reader_get_data(new_file_name+'.xlsx', facility_list)
+    wb = load_workbook(new_file_name+'.xlsx') 
     for facility in facility_list:
         df = df_dict[facility][:,2:] 
         ws = wb[facility] 
         df_to_excel(df, ws)
     wb.save
-    upload_file_to_drive(wb, '(clean)' + new_file_name)
+    upload_file_to_drive(wb, new_file_name+' (clean)'+'.xlsx')
 
 def final_combine_and_store_all_facilities(excel_file, facility_list, submission_id):
    fdfs = excel_reader_get_data(excel_file, facility_list)
