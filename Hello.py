@@ -49,7 +49,7 @@ forecast_list = ['Forecast Version','00+12','01+11','02+10','03+09','04+08','05+
 fxarea_list   = ['Functional Area', 'Ops', 'Finance', 'Marketing', 'Other']
 with col2:
     with st.form("my_form"):  # , clear_on_submit=True):
-        servline_select = st.selectbox('Service Line', servline_list)
+        servline_select = st.selectbox('Service Line', servline_list, index=None)
         forecast_select = st.selectbox('Forecast Version', forecast_list)
         fxarea_select   = st.selectbox('Functional Area', fxarea_list)
         editor_entry    = st.text_input('Name')
