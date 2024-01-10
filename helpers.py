@@ -210,10 +210,9 @@ def create_clean_copy(new_file_name, df_dict, facility_list):
 
     upload_file_to_drive(wb, new_file_name+' (clean)'+'.xlsx')
 
-def final_combine_and_store_all_facilities(excel_file, facility_list, submission_id):
-   fdfs = excel_reader_get_data(excel_file, facility_list)
+def final_combine_and_store_all_facilities(df_dict, facility_list, submission_id):
    for facility in facility_list:
-      df = fdfs[facility]
+      df = df_dict[facility]
       df = reformat_add_df_context(df, facility, submission_id)
       body = excel_storage_conversion(df)
       stored_APPEND_data(ssid_full, 'Mamm!A:P', body) ############## in progress

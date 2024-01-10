@@ -86,6 +86,7 @@ if submitted:
         st.write(df_dict['Ballantyne'].iloc[1:,2:])
         upfileid = h.upload_file_to_drive(uploaded_file, filename+'.xlsx')
         cleanfileid = h.create_clean_copy(filename, df_dict, facility_list)
+        h.final_combine_and_store_all_facilities(df_dict, facility_list, upfileid)
         upload_metadata = {'ServiceLine':servline_select, 
                 'Year':2024,
                 'Version':forecast_select,
@@ -98,12 +99,8 @@ if submitted:
                 'Iteration':itnum,
                 'CleanCopyID':cleanfileid,
                 }
-        h.add_submission_line(upload_metadata)
-        st.write(upfileid)
-        st.write(filename)
-        # h.final_combine_and_store_all_facilities(excel_file, facility_list, submission_id)     
+        h.add_submission_line(upload_metadata) 
         st.success('File uploaded successfully.')
-
-        # st.write(upfileid)
+        
         
     
