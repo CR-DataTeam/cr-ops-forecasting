@@ -164,7 +164,7 @@ def create_clean_copy(new_file_name, df_dict, facility_list):
     try:
         wb = load_workbook('Mamm_Template.xlsx')
         for facility in facility_list:
-            df = df_dict[facility] .iloc[:,2:]   ##########
+            df = df_dict[facility].iloc[1:,2:]   ##########
             ws = wb[facility] 
             df_to_excel(df, ws) 
         wb.save(buffer)

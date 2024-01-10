@@ -81,7 +81,9 @@ if submitted:
         filenum = h.number_naming_convention(itnum)
         filename = filenum + ' - ' + servline_select + ' - ' + forecast_select + \
                     ' - ' + fxarea_select + ' - ' + h.today_string_file()
+        
         df_dict = h.excel_reader_get_data(uploaded_file, facility_list)
+        st.write(df_dict['Ballantyne'].iloc[1:,2:])
         upfileid = h.upload_file_to_drive(uploaded_file, filename+'.xlsx')
         cleanfileid = h.create_clean_copy(filename, df_dict, facility_list)
         upload_metadata = {'ServiceLine':servline_select, 
