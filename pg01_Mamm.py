@@ -28,3 +28,4 @@ df['Download Clean'] = df.apply(lambda x: make_clickable(x['url_c'], x['uname_c'
 
 
 st.dataframe(df, hide_index=True, column_order=('ServiceLine', 'Version', 'FunctionalArea','Submitter','SubmissionNotes','Timestamp', 'Download Original', 'Download Clean'))
+df
