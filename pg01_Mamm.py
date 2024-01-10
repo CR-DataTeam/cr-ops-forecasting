@@ -27,7 +27,7 @@ df['Download Original'] = df.apply(lambda x: make_clickable(x['url_o'], x['Submi
 df['Download Clean'] = df.apply(lambda x: make_clickable(x['url_c'], x['uname_c']), axis=1)
 col_order = ['ServiceLine', 'Version', 'Iteration', 'FunctionalArea','Submitter', 'SubmissionNotes','Timestamp', 'Download Original', 'Download Clean']
 final_df = df[col_order]
-final_df = final_df.sort_values('Iteration')
+final_df = final_df.sort_values('Iteration', ascending=False)
 
 # st.dataframe(df, hide_index=True, column_order=('ServiceLine', 'Version', 'FunctionalArea','Submitter','SubmissionNotes','Timestamp', 'Download Original', 'Download Clean'))
 st.markdown(final_df.to_html(escape=False, index=False),unsafe_allow_html=True)
