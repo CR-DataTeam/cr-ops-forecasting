@@ -82,7 +82,7 @@ if submitted:
         filename = filenum + ' - ' + servline_select + ' - ' + forecast_select + \
                     ' - ' + fxarea_select + ' - ' + h.today_string_file()
         upfileid = h.upload_file_to_drive(uploaded_file, filename+'.xlsx')
-
+        cleanfileid = h.create_clean_copy(filename, uploaded_file, facility_list)
         upload_metadata = {'ServiceLine':servline_select, 
                 'Year':2024,
                 'Version':forecast_select,
@@ -93,9 +93,9 @@ if submitted:
                 'SubmissionID':upfileid,
                 'SubmissionTitle':filename,
                 'Iteration':itnum,
+                'CleanCopyID':cleanfileid,
                 }
         h.add_submission_line(upload_metadata)
-        h.create_clean_copy(filename, uploaded_file, facility_list)
         st.write(upfileid)
         st.write(filename)
         # h.final_combine_and_store_all_facilities(excel_file, facility_list, submission_id)     
