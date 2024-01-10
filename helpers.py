@@ -9,7 +9,7 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_interval
 import re
 from datetime import date
-
+from io import BytesIO
 
 ssid_subm = '10Od0nhz92hKVpuAwXFg45XGRZMz6x8vYf3cPvtxQe5E'
 ssid_full = '1SsrJp5370HOfCURm64vOHIjZnMxmeC5deVZ6bLTEJE4'
@@ -60,7 +60,6 @@ def reformat_add_df_context(df, facility, submission_id):
     df['submission_id'] = submission_id
     df=df[1:]
     return df
-
 
 def stored_GET_data(spreadsheetId, spreadsheetRange):   
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
@@ -134,6 +133,18 @@ def upload_file_to_drive(upload_file, file_name):
   
   return fileid
 
+def convert_df(excel_file, facility_list):
+    output = BytesIO()
+    df_dict = excel_reader_get_data(excel_file, facility_list)
+    writer = pd.ExcelWriter(output, 
+                            engine='xlsxwriter', 
+                            engine_kwargs={'options':{'strings_to_numbers':True, 'in_memory': True}})
+    for i in range(len(facility_list)):
+        df_dict[df_dict['FacilityName']==facility_list[i]].to_excel(writer,
+                                                                 sheet_name=facility_list[i],
+                                                                 index=False)
+    writer.close()
+    return output.getvalue()
 
 def final_combine_and_store_all_facilities(excel_file, facility_list, submission_id):
    fdfs = excel_reader_get_data(excel_file, facility_list)
@@ -155,8 +166,9 @@ def number_naming_convention(num):
        return_str += '0'
    return return_str + nums
 
-
 def add_submission_line(metadata):
     metadata_df = pd.DataFrame(metadata, index=[0])
     goog = excel_storage_conversion(metadata_df)
     stored_APPEND_data(ssid_subm, 'All!A:K', goog)
+
+

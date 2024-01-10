@@ -82,6 +82,7 @@ if submitted:
         filename = filenum + ' - ' + servline_select + ' - ' + forecast_select + \
                     ' - ' + fxarea_select + ' - ' + h.today_string_file()
         upfileid = h.upload_file_to_drive(uploaded_file, filename+'.xlsx')
+
         upload_metadata = {'ServiceLine':servline_select, 
                 'Year':2024,
                 'Version':forecast_select,
@@ -90,7 +91,7 @@ if submitted:
                 'SubmissionNotes':note_entry,
                 'Timestamp':h.today_string(),
                 'SubmissionID':upfileid,
-                'SubmissionTitle':'placeholder',
+                'SubmissionTitle':filename,
                 'Iteration':itnum,
                 }
         h.add_submission_line(upload_metadata)
