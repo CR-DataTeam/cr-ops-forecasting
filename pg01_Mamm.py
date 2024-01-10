@@ -13,7 +13,7 @@ init_SL = 'Mamm'
 
 # Optional -- adds the title and icon to the current page
 st.set_page_config(
-     page_title="Mamm History",
+     page_title=init_SL+ ' Review',
      layout="wide"
      )
 
