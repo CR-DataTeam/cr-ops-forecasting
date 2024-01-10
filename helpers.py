@@ -170,7 +170,7 @@ def create_clean_copy(new_file_name, df_dict, facility_list):
         wb.save(buffer)
         buffervals = buffer.getvalue()
         
-        file_metadata = {"name": new_file_name, "parents":["113OEOtoIU3iF3mQ4EwlZZGtPgbZfePqc"]}
+        file_metadata = {"name": new_file_name + ' (clean).xlsx', "parents":["113OEOtoIU3iF3mQ4EwlZZGtPgbZfePqc"]}
         with NamedTemporaryFile(dir='.', suffix='.xlsx') as f:
             f.write(buffervals)
             media = MediaFileUpload(f.name, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") 
