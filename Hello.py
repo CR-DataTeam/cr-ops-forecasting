@@ -59,7 +59,7 @@ with col2:
         # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
 
-fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
+facility_list = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
         'McDowell', 'MCP', 'MMP', 'Mobile', 'Monroe', 'Mooresville', 
         'Pineville', 'Prosperity', 'Rock Hill', 'Rosedale', 'Southpark', 
         'Steele Creek', 'Union West', 'University']
@@ -95,7 +95,7 @@ if submitted:
                 'Iteration':itnum,
                 }
         h.add_submission_line(upload_metadata)
-        h.create_clean_copy()
+        h.create_clean_copy(filename, facility_list)
         st.write(upfileid)
         st.write(filename)
         # h.final_combine_and_store_all_facilities(excel_file, facility_list, submission_id)     
