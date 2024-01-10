@@ -65,18 +65,8 @@ fl = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
         'Steele Creek', 'Union West', 'University']
 
 
-iteration_calc = h.stored_GET_data(h.ssid_subm, 'Mamm!A1:K')[1]
-iteration_calc
-#### Assign GET request to dfpiv.
-# test = pd.DataFrame(iteration_calc['values'])
-# test.columns = test.iloc[0]
-# dfpiv = test[1:]
-# dfpiv
-
-iterc = h.stored_GET_data(h.ssid_subm, 'Mamm!A1:K')[0]
-filtertest = iterc[(iterc['ServiceLine']==servline_select) & (iterc['Version']==forecast_select)]
-filtertest
-st.write(len(filtertest))
+itnum = h.get_iteration(servline_select,forecast_select)+1
+st.write(itnum)
 
 if submitted:
     if servline_list != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
@@ -86,13 +76,10 @@ if submitted:
         st.warning('Please fill out form.')
 
     if input_validity:
-
         # data = h.excel_reader_get_data('Mamm 2024 Initial Load.xlsx', fl)
-        # new = h.reformat_add_df_context(df,'Ballantyne','asdfasdfasdf')
-        # h.stored_APPEND_data(h.ssid_full,'Mamm!A:P',h.excel_storage_conversion(new))
+        itnum = h.get_iteration(servline_select,forecast_select)
         upfileid = h.upload_file_to_drive(uploaded_file, 'form_test.xlsx')
-        
-        asdf = {'ServiceLine':servline_select, 
+        upload_metadata = {'ServiceLine':servline_select, 
                 'Year':2024,
                 'Version':forecast_select,
                 'FunctionalArea':fxarea_select,
@@ -101,11 +88,10 @@ if submitted:
                 'Timestamp':h.today_string(),
                 'SubmissionID':upfileid,
                 'SubmissionTitle':'placeholder',
-                'Iteration':1,
+                'Iteration':itnum,
                 }
-        sdf = pd.DataFrame(asdf, index=[0])
-        sdf
-        iteration_calc
+        metadata_df = pd.DataFrame(upload_metadata, index=[0])
+        # h.final_combine_and_store_all_facilities(excel_file, facility_list, submission_id)     
         st.success('File uploaded successfully.')
 
         # st.write(upfileid)

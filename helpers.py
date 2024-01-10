@@ -14,6 +14,7 @@ from datetime import date
 ssid_subm = '10Od0nhz92hKVpuAwXFg45XGRZMz6x8vYf3cPvtxQe5E'
 ssid_full = '1SsrJp5370HOfCURm64vOHIjZnMxmeC5deVZ6bLTEJE4'
 
+
 creds = service_account.Credentials.from_service_account_file(
           'serviceacc.json',
           scopes=['https://www.googleapis.com/auth/drive.file',
@@ -22,7 +23,6 @@ creds = service_account.Credentials.from_service_account_file(
                   'https://www.googleapis.com/auth/spreadsheets'
                   ]
           )  
-
 
 def today_string():
     today = date.today()
@@ -38,14 +38,13 @@ def load_workbook_range(range_string, ws):
 
     return pd.DataFrame(data_rows, columns=get_column_interval(col_start, col_end))
 
-
 def excel_reader_get_data(excel_file, facility_list):
     wb = openpyxl.load_workbook(excel_file, read_only=True)
     data = {}
     for facility in facility_list:
        ws = wb[facility]
-       data[facility] = load_workbook_range(range_string='A1:N17', ws=ws)
-    return data
+       data[facility] = load_workbook_range(range_string='A1:N17', ws=ws)  # df
+    return data  # dict of dfs
 
 def excel_storage_conversion(df):
     goog = df.values.tolist()
@@ -59,14 +58,6 @@ def reformat_add_df_context(df, facility, submission_id):
 
 
 def stored_GET_data(spreadsheetId, spreadsheetRange):   
-    creds = service_account.Credentials.from_service_account_file(
-          'serviceacc.json',
-          scopes=['https://www.googleapis.com/auth/drive.file',
-                  'https://www.googleapis.com/auth/drive',
-                  'https://www.googleapis.com/auth/drive.metadata',
-                  'https://www.googleapis.com/auth/spreadsheets'
-                  ]
-          )
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
     spreadsheetId = spreadsheetId
     spreadsheetRange = spreadsheetRange
@@ -79,16 +70,7 @@ def stored_GET_data(spreadsheetId, spreadsheetRange):
     dfpiv = df[1:]
     return df, dfpiv
     
-
 def stored_SET_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):  
-    creds = service_account.Credentials.from_service_account_file(
-          'serviceacc.json',
-          scopes=['https://www.googleapis.com/auth/drive.file',
-                  'https://www.googleapis.com/auth/drive',
-                  'https://www.googleapis.com/auth/drive.metadata',
-                  'https://www.googleapis.com/auth/spreadsheets'
-                  ]
-          ) 
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
     spreadsheetId = spreadsheetId  # '1-zYgl-7ffj8cV2N80aICDHHKHfqyQX5rE3HXDcgSsfc'
     spreadsheetRange = spreadsheetRange  # 'CurrentFacilityValues!A1:BQ321'
@@ -101,16 +83,7 @@ def stored_SET_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USE
                                               body=valueBody
                                               ).execute()
     
-
-def stored_APPEND_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'): 
-    creds = service_account.Credentials.from_service_account_file(
-          'serviceacc.json',
-          scopes=['https://www.googleapis.com/auth/drive.file',
-                  'https://www.googleapis.com/auth/drive',
-                  'https://www.googleapis.com/auth/drive.metadata',
-                  'https://www.googleapis.com/auth/spreadsheets'
-                  ]
-          )  
+def stored_APPEND_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):  
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
     spreadsheetId = spreadsheetId  # '1-zYgl-7ffj8cV2N80aICDHHKHfqyQX5rE3HXDcgSsfc'
     spreadsheetRange = spreadsheetRange  # 'CurrentFacilityValues!A:BQ'
@@ -122,8 +95,6 @@ def stored_APPEND_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='
                                               valueInputOption=inputOption, 
                                               body=valueBody
                                               ).execute()
-
-
 
 def upload_file_to_drive(upload_file, file_name):
   service = build("drive", "v3", credentials=creds)
@@ -157,3 +128,17 @@ def upload_file_to_drive(upload_file, file_name):
   service.permissions().create(fileId=fileid, body=permission2).execute()
   
   return fileid
+
+
+def final_combine_and_store_all_facilities(excel_file, facility_list, submission_id):
+   fdfs = excel_reader_get_data(excel_file, facility_list)
+   for facility in facility_list:
+      df = fdfs[facility]
+      df = reformat_add_df_context(df, facility, submission_id)
+      body = excel_storage_conversion(df)
+      stored_APPEND_data(ssid_full, 'Mamm!A:P', body)
+      
+def get_iteration(service_line, forecast_month):
+   subm_df = stored_GET_data(ssid_subm, 'Mamm!A1:K')[0]
+   filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month)]
+   return len(filtered_list)
