@@ -29,6 +29,11 @@ def today_string():
     current_date = today.strftime('%Y-%m-%d')
     return current_date
 
+def today_string_file():
+    today = date.today()
+    current_date = today.strftime('%m%d')
+    return current_date
+
 def load_workbook_range(range_string, ws):
     col_start, col_end = re.findall("[A-Z]+", range_string)
 
@@ -142,3 +147,10 @@ def get_iteration(service_line, forecast_month):
    subm_df = stored_GET_data(ssid_subm, 'Mamm!A1:K')[0]
    filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month)]
    return len(filtered_list)
+
+def number_naming_convention(num):
+   nums = str(num)
+   return_str = ''
+   for x in range(4-len(nums)):
+       return_str += '0'
+   return return_str + nums
