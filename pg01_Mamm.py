@@ -9,6 +9,8 @@ def make_clickable(url, name):
 
 LOGGER = get_logger(__name__)
 
+init_SL = 'Mamm'
+
 # Optional -- adds the title and icon to the current page
 st.set_page_config(
      page_title="Mamm History",
@@ -19,15 +21,15 @@ forecast_list = ['Forecast Version','00+12','01+11','02+10','03+09','04+08','05+
 forecast_select = st.selectbox('Forecast Version', forecast_list, index=1)
 
 subm_df = h.stored_GET_data(h.ssid_subm, 'All!A1:K')[0]
-df = subm_df[(subm_df['ServiceLine']=='Mamm') & (subm_df['Version']==forecast_select)]
+df = subm_df[(subm_df['ServiceLine']==init_SL) & (subm_df['Version']==forecast_select)]
 df['url_o'] = df.SubmissionID.apply(lambda x: 'https://docs.google.com/spreadsheets/d/' + x + '/export?format=xlsx')
 df['url_c'] = df.CleanCopyID.apply(lambda x: 'https://docs.google.com/spreadsheets/d/' + x + '/export?format=xlsx')
 df['uname_c'] = df['SubmissionTitle'] + ' (clean)'
 df['Download Original'] = df.apply(lambda x: make_clickable(x['url_o'], x['SubmissionTitle']), axis=1)
 df['Download Clean'] = df.apply(lambda x: make_clickable(x['url_c'], x['uname_c']), axis=1)
+
 col_order = ['ServiceLine', 'Version', 'Iteration', 'FunctionalArea','Submitter', 'SubmissionNotes','Timestamp', 'Download Original', 'Download Clean']
 final_df = df[col_order]
 final_df = final_df.sort_values('Iteration', ascending=False)
 
-# st.dataframe(df, hide_index=True, column_order=('ServiceLine', 'Version', 'FunctionalArea','Submitter','SubmissionNotes','Timestamp', 'Download Original', 'Download Clean'))
-st.markdown(final_df.to_html(escape=False, index=False),unsafe_allow_html=True)
+st.markdown(final_df.to_html(escape=False, index=False),unsafe_allow_html=True) 

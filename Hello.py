@@ -59,23 +59,29 @@ with col2:
         # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
 
-facility_list = ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
+facilities = {
+    'Mamm': ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
         'McDowell', 'MCP', 'MMP', 'Mobile', 'Monroe', 'Mooresville', 
         'Pineville', 'Prosperity', 'Rock Hill', 'Rosedale', 'Southpark', 
-        'Steele Creek', 'Union West', 'University']
+        'Steele Creek', 'Union West', 'University'], 
+    'CIS': ['Ballantyne', 'Denver', 'Huntersville', 'Matthews',
+        'Rock Hill', 'Southpark'], 
+    'Vein': ['Huntersville', 'Southpark']
+}
 
 
-itnum = h.get_iteration(servline_select,forecast_select)+1
-st.write(itnum)
+
 
 if submitted:
-    if servline_list != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
+    if servline_select != 'Service Line' and forecast_select != 'Forecast Version' and fxarea_select != 'Functional Area' and editor_entry is not None and uploaded_file is not None:
         input_validity = True
     else:
         input_validity = False
         st.warning('Please fill out form.')
 
     if input_validity:
+        facility_list = facilities[servline_select]
+
         # data = h.excel_reader_get_data('Mamm 2024 Initial Load.xlsx', fl)
         itnum = h.get_iteration(servline_select,forecast_select)+1
         filenum = h.number_naming_convention(itnum)
@@ -83,10 +89,9 @@ if submitted:
                     ' - ' + fxarea_select + ' - ' + h.today_string_file()
         
         df_dict = h.excel_reader_get_data(uploaded_file, facility_list)
-        st.write(df_dict['Ballantyne'].iloc[1:,2:])
         upfileid = h.upload_file_to_drive(uploaded_file, filename+'.xlsx')
         cleanfileid = h.create_clean_copy(filename, df_dict, facility_list)
-        h.final_combine_and_store_all_facilities(df_dict, facility_list, upfileid)
+        h.final_combine_and_store_all_facilities(df_dict, facility_list, upfileid, servline_select)
         upload_metadata = {'ServiceLine':servline_select, 
                 'Year':2024,
                 'Version':forecast_select,
@@ -101,6 +106,6 @@ if submitted:
                 }
         h.add_submission_line(upload_metadata) 
         st.success('File uploaded successfully.')
-        
+
         
     
