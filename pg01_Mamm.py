@@ -29,4 +29,4 @@ col_order = ['ServiceLine', 'Version', 'FunctionalArea','Submitter','SubmissionN
 final_df = df[col_order]
 
 st.dataframe(df, hide_index=True, column_order=('ServiceLine', 'Version', 'FunctionalArea','Submitter','SubmissionNotes','Timestamp', 'Download Original', 'Download Clean'))
-st.markdown(final_df,unsafe_allow_html=True)
+st.markdown(final_df.to_html(escape=False),unsafe_allow_html=True)
