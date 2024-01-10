@@ -158,11 +158,10 @@ def convert_df(excel_file, facility_list):
     writer.close()
     return output.getvalue()
 
-def create_clean_copy(new_file_name, excel_file, facility_list):
+def create_clean_copy(new_file_name, df_dict, facility_list):
     buffer = io.BytesIO()
     service = build("drive", "v3", credentials=creds)
     try:
-        df_dict = excel_reader_get_data(excel_file, facility_list)
         wb = load_workbook('Mamm_Template.xlsx')
         for facility in facility_list:
             df = df_dict[facility][:,2:] 
