@@ -4,6 +4,9 @@ import helpers as h
 import pandas as pd
 from tempfile import NamedTemporaryFile
 
+def make_clickable(url, name):
+    return '<a href="{}" rel="noopener noreferrer" target="_blank">{}</a>'.format(url,name)
+
 LOGGER = get_logger(__name__)
 
 # Optional -- adds the title and icon to the current page
@@ -17,4 +20,11 @@ forecast_select = st.selectbox('Forecast Version', forecast_list, index=1)
 
 subm_df = h.stored_GET_data(h.ssid_subm, 'All!A1:K')[0]
 df = subm_df[(subm_df['ServiceLine']=='Mamm') & (subm_df['Version']==forecast_select)]
-df
+df['url_o'] = 'https://docs.google.com/spreadsheets/d/' + df['SubmissionID'] + '/export?format=xlsx'
+df['url_c'] = 'https://docs.google.com/spreadsheets/d/' + df['CleanCopyID'] + '/export?format=xlsx'
+df['uname_c'] = df['SubmissionTitle'] + ' (clean)'
+df['Download Original'] = df.apply(lambda x: make_clickable(x['url_o'], x['SubmissionTitle']), axis=1)
+df['Download Clean'] = df.apply(lambda x: make_clickable(x['url_c'], x['uname_c']), axis=1)
+
+
+st.dataframe(df, hide_index=True, column_order=('ServiceLine', 'Version', 'FunctionalArea','Submitter','SubmissionNotes','Timestamp'))
