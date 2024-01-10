@@ -10,6 +10,8 @@ from openpyxl.utils import get_column_interval
 import re
 from datetime import date
 from io import BytesIO
+import shutil
+from openpyxl.utils.dataframe import dataframe_to_rows
 
 ssid_subm = '10Od0nhz92hKVpuAwXFg45XGRZMz6x8vYf3cPvtxQe5E'
 ssid_full = '1SsrJp5370HOfCURm64vOHIjZnMxmeC5deVZ6bLTEJE4'
@@ -133,6 +135,15 @@ def upload_file_to_drive(upload_file, file_name):
   
   return fileid
 
+def df_to_excel(df, ws, header=False, index=False, startrow=1, startcol=2):
+    """Write DataFrame df to openpyxl worksheet ws"""
+
+    rows = dataframe_to_rows(df, header=header, index=index)
+
+    for r_idx, row in enumerate(rows, startrow + 1):
+        for c_idx, value in enumerate(row, startcol + 1):
+             ws.cell(row=r_idx, column=c_idx).value = value
+
 def convert_df(excel_file, facility_list):
     output = BytesIO()
     df_dict = excel_reader_get_data(excel_file, facility_list)
@@ -146,13 +157,21 @@ def convert_df(excel_file, facility_list):
     writer.close()
     return output.getvalue()
 
+def create_clean_copy(new_file_name, df_dict, facility_list):
+    shutil.copy("Mamm_Template.xlsx", new_file_name)
+    wb = load_workbook(new_file_name) 
+    for facility in facility_list:
+        df = df_dict[facility][:,2:] 
+        ws = wb[facility] 
+        df_to_excel(df, ws)
+
 def final_combine_and_store_all_facilities(excel_file, facility_list, submission_id):
    fdfs = excel_reader_get_data(excel_file, facility_list)
    for facility in facility_list:
       df = fdfs[facility]
       df = reformat_add_df_context(df, facility, submission_id)
       body = excel_storage_conversion(df)
-      stored_APPEND_data(ssid_full, 'Mamm!A:P', body)
+      stored_APPEND_data(ssid_full, 'Mamm!A:P', body) ############## in progress
       
 def get_iteration(service_line, forecast_month):
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
