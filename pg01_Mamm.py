@@ -27,4 +27,4 @@ df['Download Original'] = df.apply(lambda x: make_clickable(x['url_o'], x['Submi
 df['Download Clean'] = df.apply(lambda x: make_clickable(x['url_c'], x['uname_c']), axis=1)
 
 
-st.dataframe(df, hide_index=True, column_order=('ServiceLine', 'Version', 'FunctionalArea','Submitter','SubmissionNotes','Timestamp'))
+st.dataframe(df, hide_index=True, column_order=('ServiceLine', 'Version', 'FunctionalArea','Submitter','SubmissionNotes','Timestamp', 'Download Original', 'Download Clean'))
