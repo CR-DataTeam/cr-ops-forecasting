@@ -160,11 +160,17 @@ def convert_df(excel_file, facility_list):
     writer.close()
     return output.getvalue()
 
-def create_clean_copy(new_file_name, df_dict, facility_list):
+def create_clean_copy(new_file_name, df_dict, facility_list, service_line):
     buffer = io.BytesIO()
     service = build("drive", "v3", credentials=creds)
+    if service_line == 'Mamm':
+        template_name = 'Mamm_Template.xlsx'
+    elif service_line == 'CIS':
+        template_name = 'CIS_Template.xlsx'
+    else:
+        template_name = 'Vein_Template.xlsx'
     try:
-        wb = load_workbook('Mamm_Template.xlsx')
+        wb = load_workbook(template_name)
         for facility in facility_list:
             df = df_dict[facility].iloc[1:,2:]   ##########
             ws = wb[facility] 

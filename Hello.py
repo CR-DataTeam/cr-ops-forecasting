@@ -89,7 +89,7 @@ if submitted:
         
         df_dict = h.excel_reader_get_data(uploaded_file, facility_list)
         upfileid = h.upload_file_to_drive(uploaded_file, filename+'.xlsx')
-        cleanfileid = h.create_clean_copy(filename, df_dict, facility_list)
+        cleanfileid = h.create_clean_copy(filename, df_dict, facility_list, servline_select)
         h.final_combine_and_store_all_facilities(df_dict, facility_list, upfileid, servline_select, forecast_select, itnum)
         upload_metadata = {'ServiceLine':servline_select, 
                 'Year':2024,
