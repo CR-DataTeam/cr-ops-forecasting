@@ -46,12 +46,18 @@ def load_workbook_range(range_string, ws):
 
     return pd.DataFrame(data_rows, columns=get_column_interval(col_start, col_end))
 
-def excel_reader_get_data(excel_file, facility_list):
+def excel_reader_get_data(excel_file, facility_list, service_line):
+    if service_line == 'Mamm':
+        range_sl = 'A1:N17'
+    elif service_line == 'CIS':
+        range_sl = 'A1:N10'
+    else:
+        range_sl = 'A1:N7'
     wb = openpyxl.load_workbook(excel_file, read_only=True)
     data = {}
     for facility in facility_list:
        ws = wb[facility]
-       data[facility] = load_workbook_range(range_string='A1:N17', ws=ws)  # df
+       data[facility] = load_workbook_range(range_string=range_sl, ws=ws)  # df
     return data  # dict of dfs
 
 def excel_storage_conversion(df):
@@ -147,9 +153,9 @@ def df_to_excel(df, ws, header=False, index=False, startrow=1, startcol=2):
         for c_idx, value in enumerate(row, startcol + 1):
              ws.cell(row=r_idx, column=c_idx).value = value
 
-def convert_df(excel_file, facility_list):
+def convert_df(excel_file, facility_list, service_line):
     output = BytesIO()
-    df_dict = excel_reader_get_data(excel_file, facility_list)
+    df_dict = excel_reader_get_data(excel_file, facility_list, service_line)
     writer = pd.ExcelWriter(output, 
                             engine='xlsxwriter', 
                             engine_kwargs={'options':{'strings_to_numbers':True, 'in_memory': True}})

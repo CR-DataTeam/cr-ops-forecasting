@@ -87,7 +87,7 @@ if submitted:
         filename = filenum + ' - ' + servline_select + ' - ' + forecast_select + \
                     ' - ' + fxarea_select + ' - ' + h.today_string_file()
         
-        df_dict = h.excel_reader_get_data(uploaded_file, facility_list)
+        df_dict = h.excel_reader_get_data(uploaded_file, facility_list, servline_select)
         upfileid = h.upload_file_to_drive(uploaded_file, filename+'.xlsx')
         cleanfileid = h.create_clean_copy(filename, df_dict, facility_list, servline_select)
         h.final_combine_and_store_all_facilities(df_dict, facility_list, upfileid, servline_select, forecast_select, itnum)
