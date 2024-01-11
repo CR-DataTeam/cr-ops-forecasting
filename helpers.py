@@ -9,6 +9,7 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_interval
 import re
 from datetime import date
+from datetime import datetime, timedelta
 from io import BytesIO
 import io
 import shutil
@@ -28,12 +29,12 @@ creds = service_account.Credentials.from_service_account_file(
           )  
 
 def today_string():
-    today = date.today()
+    today = datetime.today() - timedelta(hours=5)
     current_date = today.strftime('%Y-%m-%d')
     return current_date
 
 def today_string_file():
-    today = date.today()
+    today = datetime.today() - timedelta(hours=5)
     current_date = today.strftime('%m%d')
     return current_date
 
