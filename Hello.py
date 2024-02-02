@@ -45,7 +45,7 @@ st.write("# Forecasting Tool")
 col1, col2, col3 = st.columns([.25,1,.25])
 
 servline_list = ['Mamm','CIS','Vein']
-forecast_list = ['00+12','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
+forecast_list = ['Budget','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
 fxarea_list   = ['Ops', 'Finance', 'Marketing', 'Other']
 with col2:
     with st.form("my_form"):  # , clear_on_submit=True):
