@@ -33,6 +33,9 @@ final_df = df[col_order]
 final_df = final_df.sort_values('Iteration', ascending=False)
 
 st.markdown(final_df.to_html(escape=False, index=False),unsafe_allow_html=True) 
+######################
+st.markdown(':red[January actuals not yet added.  The file with actuals + the prior month forecast budget will appear here once ready.]')
+######################
 st.markdown('')
 st.markdown('')
 st.markdown('')
