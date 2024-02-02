@@ -24,7 +24,7 @@ LOGGER = get_logger(__name__)
 # Optional -- adds the title and icon to the current page
 st.set_page_config(
      page_title="Forecasting Tool",
-     layout="wide"
+     # layout="wide"
      )
 
 # add_page_title()
