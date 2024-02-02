@@ -29,9 +29,13 @@ creds = service_account.Credentials.from_service_account_file(
           )  
 
 def original_v_clean_message():
-    themessage = """'Original' refers to the file as it was uploaded, with no changes made.  
+    themessage = """
+    
+    
+    
+    :gray['Original' refers to the file as it was uploaded, with no changes made.  
     'Clean' refers to a version of the file with **only** the numbers included and all formulas stripped (except for the summary, those are automatically added).  
-    Please refer to the Budget files for any of the Service Lines or the initial email sent out for an example."""
+    Please refer to the Budget files for any of the Service Lines or the initial email sent out for an example.]"""
     return themessage
 
 def today_string():
