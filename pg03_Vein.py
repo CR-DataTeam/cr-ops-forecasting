@@ -43,6 +43,7 @@ st.markdown('')
 compare_list = h.generate_list_within_forecast_month('Vein', forecast_select)
 compare_select   = st.selectbox('Select a Version to See Changes', compare_list, index=None)
 sl_found, fm_found, in_found = h.from_SubmissionTitle_return_SL_FM_IN(compare_select)
+compare_select
 sl_found
 fm_found
 in_found
