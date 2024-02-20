@@ -130,7 +130,7 @@ def generate_list_within_forecast_month(service_line, forecast_month):
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
    try:
     filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month)]
-    versions_to_compare = list(filtered_list['SubmissionID'])
+    versions_to_compare = list(filtered_list['SubmissionTitle'])
    except:
     versions_to_compare = []
    return versions_to_compare
