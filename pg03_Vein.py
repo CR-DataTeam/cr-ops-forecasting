@@ -49,7 +49,7 @@ prev_df = h.get_df_from_full_dataset_using_subid(prev_id, 'Vein')
 st.markdown('<u>Changes from prior version</u>:',unsafe_allow_html=True) 
 comp_output = h.generate_df_changes(curr_df, prev_df, 'Vein')
 if len(curr_id) > 0 and len(prev_id) > 0:
-    st.markdown(comp_output)
+    st.code(comp_output)
 # else:
 #     st.markdown('No comparison available.')
 
