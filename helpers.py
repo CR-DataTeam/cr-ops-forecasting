@@ -158,34 +158,37 @@ def get_df_from_full_dataset_using_subid(subm_id, service_line):
       return pd.DataFrame()
 
 def generate_df_changes(df1, df2, service_line):
-    diff = df1.compare(df2)
-    diffT = diff.T
-    col_mon = diff.columns.to_list()
-    col_exa = diff.T.columns.to_list()
-    if service_line == 'Mamm':
-        exam_ref = ['Screening Mammography', 'Screening Breast US', 'Diagnostic Mamm', 
-                'Recall from Screening', 'Ductogram', 'Breast Ultrasound', 'Biopsy', 
-                'Stereotactic Biopsy', 'Breast MRI Biopsy', 'Breast MRI', 'DEXA', 
-                'Needle Loc', 'Seed Loc', 'Abscess Drainage', 'Sentinel Injection', 
-                'Cyst Aspiration']
-    elif service_line == 'CIS':
-       exam_ref = ['CT', 'Cal Sc CT', 'Cardiac CT', 'DX', 'MR', 'US', 'Fluoroscopy', 
-                   'Screening Mamm', 'DEXA']
-    else:
-       exam_ref = ['New Patient Consults', '1st Veins', 'Additional Veins', 
-                   'MD Sclerotherapy', 'Ultrasounds', 'Other']
-    flist_int = list(range(0,len))
-    elist_int = list(range(0,len(col_exa)))
-    mlist_int = list(range(0,len(col_mon),2))
+    try:
+        diff = df1.compare(df2)
+        diffT = diff.T
+        col_mon = diff.columns.to_list()
+        col_exa = diff.T.columns.to_list()
+        if service_line == 'Mamm':
+            exam_ref = ['Screening Mammography', 'Screening Breast US', 'Diagnostic Mamm', 
+                    'Recall from Screening', 'Ductogram', 'Breast Ultrasound', 'Biopsy', 
+                    'Stereotactic Biopsy', 'Breast MRI Biopsy', 'Breast MRI', 'DEXA', 
+                    'Needle Loc', 'Seed Loc', 'Abscess Drainage', 'Sentinel Injection', 
+                    'Cyst Aspiration']
+        elif service_line == 'CIS':
+            exam_ref = ['CT', 'Cal Sc CT', 'Cardiac CT', 'DX', 'MR', 'US', 'Fluoroscopy', 
+                    'Screening Mamm', 'DEXA']
+        else:
+            exam_ref = ['New Patient Consults', '1st Veins', 'Additional Veins', 
+                    'MD Sclerotherapy', 'Ultrasounds', 'Other']
+        flist_int = list(range(0,len))
+        elist_int = list(range(0,len(col_exa)))
+        mlist_int = list(range(0,len(col_mon),2))
 
-    string_output = ''
-    for row in elist_int:
-        for col in mlist_int:
-            if pd.isna(diff.iloc[row,col]) == False:
-                new_line = '*  ' + df1['FacilityName'][col] + '  ///  ' + exam_ref[row] + '  (' + col_mon[col][0] + '):  from  ' + \
-                    str(round(diff.iloc[row,col])) + '  →  ' + str(round(diff.iloc[row,col+1])) + '\n\n'
-                
-                string_output = string_output + new_line
+        string_output = ''
+        for row in elist_int:
+            for col in mlist_int:
+                if pd.isna(diff.iloc[row,col]) == False:
+                    new_line = '*  ' + df1['FacilityName'][col] + '  ///  ' + exam_ref[row] + '  (' + col_mon[col][0] + '):  from  ' + \
+                        str(round(diff.iloc[row,col])) + '  →  ' + str(round(diff.iloc[row,col+1])) + '\n\n'
+                    
+                    string_output = string_output + new_line
+    except:
+       string_output = 'No comparison available.'
     return string_output
 
 
