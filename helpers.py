@@ -158,7 +158,7 @@ def get_df_from_full_dataset_using_subid(subm_id, service_line):
     #   return pd.DataFrame()
 
 def generate_df_changes(df1, df2, service_line):
-    try:
+    #try:
         diff = df1.compare(df2)
         diffT = diff.T
         col_mon = diff.columns.to_list()
@@ -187,9 +187,9 @@ def generate_df_changes(df1, df2, service_line):
                         str(round(diff.iloc[row,col])) + '  →  ' + str(round(diff.iloc[row,col+1])) + '\n\n'
                     
                     string_output = string_output + new_line
-    except:
-       string_output = 'No comparison available.'
-    return string_output
+    #except:
+    #   string_output = 'No comparison available.'
+        return string_output
 
 
 
