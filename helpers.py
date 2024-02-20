@@ -109,6 +109,19 @@ def excel_storage_conversion(df):
     goog = df.values.tolist()
     return { 'values': goog }
 
+def from_SubmissionTitle_return_SL_FM_IN(submission_title):
+   subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
+   try:
+    filtered_list = subm_df[(subm_df['SubmissionTitle']==submission_title)]
+    sl_found = filtered_list['ServiceLine'][0]
+    fm_found = filtered_list['Version'][0]
+    in_found = filtered_list['Iteration'][0]
+   except:
+    sl_found = ''
+    fm_found = ''
+    in_found = ''
+   return sl_found, fm_found, in_found
+
 def query_current_and_previous_version_ids(service_line, forecast_month, iteration_num):
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
    # Current ID
@@ -134,7 +147,6 @@ def generate_list_within_forecast_month(service_line, forecast_month):
    except:
     versions_to_compare = []
    return versions_to_compare
-
 
 def get_df_from_full_dataset_using_subid(subm_id, service_line):
    full_df = stored_GET_data(ssid_full, service_line+'!A1:P')[0]
