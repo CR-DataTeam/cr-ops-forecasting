@@ -112,7 +112,7 @@ def excel_storage_conversion(df):
 def from_SubmissionTitle_return_SL_FM_IN(submission_title):
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
    try:
-    filtered_list = subm_df[(subm_df['SubmissionTitle']==submission_title)]
+    filtered_list = subm_df[(subm_df['SubmissionTitle']==submission_title)].reset_index(drop=True)
     sl_found = filtered_list['ServiceLine'][0]
     fm_found = filtered_list['Version'][0]
     in_found = filtered_list['Iteration'][0]
@@ -126,7 +126,7 @@ def query_current_and_previous_version_ids(service_line, forecast_month, iterati
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
    # Current ID
    try:
-        filtered_list1 = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month) & (subm_df['Iteration']==int(iteration_num))]
+        filtered_list1 = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month) & (subm_df['Iteration']==int(iteration_num))].reset_index(drop=True)
         current_id = filtered_list1['SubmissionID'][0]
    except:
         current_id = ''   
@@ -137,7 +137,7 @@ def query_current_and_previous_version_ids(service_line, forecast_month, iterati
        previous_id = filtered_list2['SubmissionID'][0]
    except:
        previous_id = '' 
-   return subm_df, service_line, forecast_month, iteration_num #filtered_list1, filtered_list2 #current_id, previous_id    # filtered_list1, filtered_list2 #
+   return service_line, forecast_month, iteration_num #filtered_list1, filtered_list2 #current_id, previous_id    # filtered_list1, filtered_list2 #
 
 def generate_list_within_forecast_month(service_line, forecast_month):
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
