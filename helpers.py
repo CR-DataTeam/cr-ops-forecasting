@@ -127,14 +127,14 @@ def query_current_and_previous_version_ids(service_line, forecast_month, iterati
    # Current ID
    try:
     filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month) & (subm_df['Iteration']==iteration_num)]
-    current_id = filtered_list['SubmissionID']
+    current_id = filtered_list['SubmissionID'][0]
    except:
     current_id = ''   
 
    # Previous ID
    try:
     filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month) & (subm_df['Iteration']==iteration_num-1)]
-    previous_id = filtered_list['SubmissionID']
+    previous_id = filtered_list['SubmissionID'][0]
    except:
     previous_id = '' 
    return current_id, previous_id
