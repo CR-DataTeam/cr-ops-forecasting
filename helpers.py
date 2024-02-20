@@ -149,10 +149,13 @@ def generate_list_within_forecast_month(service_line, forecast_month):
    return versions_to_compare
 
 def get_df_from_full_dataset_using_subid(subm_id, service_line):
-   full_df = stored_GET_data(ssid_full, service_line+'!A1:P')[0]
-   specified_df = full_df[(full_df['submission_id']==subm_id)]
-   specified_df = specified_df.drop('submission_id', axis=1)
-   return specified_df
+   try:
+      full_df = stored_GET_data(ssid_full, service_line+'!A1:P')[0]
+      specified_df = full_df[(full_df['submission_id']==subm_id)]
+      specified_df = specified_df.drop('submission_id', axis=1)
+      return specified_df
+   except:
+      return pd.DataFrame()
 
 def generate_df_changes(df1, df2, service_line):
     diff = df1.compare(df2)
@@ -171,6 +174,7 @@ def generate_df_changes(df1, df2, service_line):
     else:
        exam_ref = ['New Patient Consults', '1st Veins', 'Additional Veins', 
                    'MD Sclerotherapy', 'Ultrasounds', 'Other']
+    flist_int = list(range(0,len))
     elist_int = list(range(0,len(col_exa)))
     mlist_int = list(range(0,len(col_mon),2))
 
@@ -178,7 +182,7 @@ def generate_df_changes(df1, df2, service_line):
     for row in elist_int:
         for col in mlist_int:
             if pd.isna(diff.iloc[row,col]) == False:
-                new_line = '*  ' + exam_ref[row] + '  (' + col_mon[col][0] + '):  from  ' + \
+                new_line = '*  ' + df1['FacilityName'][col] + '  ///  ' + exam_ref[row] + '  (' + col_mon[col][0] + '):  from  ' + \
                     str(round(diff.iloc[row,col])) + '  →  ' + str(round(diff.iloc[row,col+1])) + '\n\n'
                 
                 string_output = string_output + new_line
