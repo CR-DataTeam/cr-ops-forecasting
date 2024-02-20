@@ -45,7 +45,7 @@ compare_select   = st.selectbox('Select a Version to See Changes', compare_list,
 compare_select
 fl, sl_found, fm_found, in_found = h.from_SubmissionTitle_return_SL_FM_IN(compare_select)
 compare_select
-fl
+fl.reset_index()
 sl_found
 fm_found
 in_found
