@@ -117,7 +117,7 @@ def from_SubmissionTitle_return_SL_FM_IN(submission_title):
     fm_found = filtered_list['Version'][0]
     in_found = filtered_list['Iteration'][0]
    except:
-    sl_found = '' + filtered_list['ServiceLine'][0]
+    sl_found = ''
     fm_found = ''
     in_found = ''
    return sl_found, fm_found, in_found
