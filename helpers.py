@@ -120,7 +120,7 @@ def from_SubmissionTitle_return_SL_FM_IN(submission_title):
     sl_found = ''
     fm_found = ''
     in_found = ''
-   return sl_found, fm_found, in_found
+   return filtered_list, sl_found, fm_found, in_found
 
 def query_current_and_previous_version_ids(service_line, forecast_month, iteration_num):
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
