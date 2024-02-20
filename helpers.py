@@ -153,7 +153,7 @@ def get_df_from_full_dataset_using_subid(subm_id, service_line):
       full_df = stored_GET_data(ssid_full, service_line+'!A1:P')[0]
       specified_df = full_df[(full_df['submission_id']==subm_id)]
       specified_df = specified_df.drop('submission_id', axis=1)
-      return specified_df
+      return specified_df.reset_index(drop=True)
    # except:
     #   return pd.DataFrame()
 
