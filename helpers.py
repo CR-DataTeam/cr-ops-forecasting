@@ -126,7 +126,7 @@ def query_current_and_previous_version_ids(service_line, forecast_month, iterati
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
    # Current ID
    try:
-        filtered_list1 = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month) & (subm_df['Iteration']==int(iteration_num))].reset_index(drop=True)
+        filtered_list1 = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==str(forecast_month)) & (subm_df['Iteration']==str(iteration_num))].reset_index(drop=True)
         current_id = filtered_list1['SubmissionID'][0]
         current_id = 'success'
    except:
@@ -134,7 +134,7 @@ def query_current_and_previous_version_ids(service_line, forecast_month, iterati
 
    # Previous ID
    try:
-       filtered_list2 = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month) & (subm_df['Iteration']==int(iteration_num)-1)].reset_index(drop=True)
+       filtered_list2 = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month) & (subm_df['Iteration']==str(int(iteration_num)-1))].reset_index(drop=True)
        previous_id = filtered_list2['SubmissionID'][0]
        previous_id = 'success'
    except:
