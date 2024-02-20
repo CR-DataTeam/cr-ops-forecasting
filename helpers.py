@@ -175,7 +175,7 @@ def generate_df_changes(df1, df2, service_line):
         else:
             exam_ref = ['New Patient Consults', '1st Veins', 'Additional Veins', 
                     'MD Sclerotherapy', 'Ultrasounds', 'Other']
-        flist_int = list(range(0,len))
+        # flist_int = list(range(0,len))
         elist_int = list(range(0,len(col_exa)))
         mlist_int = list(range(0,len(col_mon),2))
 
