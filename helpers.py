@@ -149,13 +149,13 @@ def generate_list_within_forecast_month(service_line, forecast_month):
    return versions_to_compare
 
 def get_df_from_full_dataset_using_subid(subm_id, service_line):
-   try:
+   # try:
       full_df = stored_GET_data(ssid_full, service_line+'!A1:P')[0]
       specified_df = full_df[(full_df['submission_id']==subm_id)]
       specified_df = specified_df.drop('submission_id', axis=1)
       return specified_df
-   except:
-      return pd.DataFrame()
+   # except:
+    #   return pd.DataFrame()
 
 def generate_df_changes(df1, df2, service_line):
     try:
