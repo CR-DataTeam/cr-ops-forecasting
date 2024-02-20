@@ -137,7 +137,7 @@ def query_current_and_previous_version_ids(service_line, forecast_month, iterati
        previous_id = filtered_list2['SubmissionID'][0]
    except:
        previous_id = '' 
-   return subm_df, service_line, forecast_month, iteration_num #filtered_list1, filtered_list2 #current_id, previous_id    # filtered_list1, filtered_list2 #
+   return subm_df, filtered_list2, forecast_month, iteration_num #filtered_list1, filtered_list2 #current_id, previous_id    # filtered_list1, filtered_list2 #
 
 def generate_list_within_forecast_month(service_line, forecast_month):
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
