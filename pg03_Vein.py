@@ -46,6 +46,8 @@ sl_found, fm_found, in_found = h.from_SubmissionTitle_return_SL_FM_IN(compare_se
 curr_id, prev_id = h.query_current_and_previous_version_ids(sl_found, fm_found, in_found)
 curr_df = h.get_df_from_full_dataset_using_subid(curr_id, 'Vein')
 prev_df = h.get_df_from_full_dataset_using_subid(prev_id, 'Vein')
+curr_df
+prev_df
 comp_output = h.generate_df_changes(curr_df, prev_df, 'Vein')
 if len(curr_id) > 0 and len(prev_id) > 0:
     st.markdown(comp_output)
