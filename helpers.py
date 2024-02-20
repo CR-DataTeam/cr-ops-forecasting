@@ -184,7 +184,7 @@ def generate_df_changes(df1, df2, service_line):
             for col in mlist_int:
                 if pd.isna(diff.iloc[row,col]) == False:
                     new_line = '*  ' + df1['FacilityName'][col] + '  ///  ' + exam_ref[row] + '  (' + col_mon[col][0] + '):  from  ' + \
-                        str(round(diff.iloc[row,col])) + '  →  ' + str(round(diff.iloc[row,col+1])) + '\n\n'
+                        str(round(float(diff.iloc[row,col]))) + '  →  ' + str(round(float(diff.iloc[row,col+1]))) + '\n\n'
                     
                     string_output = string_output + new_line
     #except:
