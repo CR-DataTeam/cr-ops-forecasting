@@ -1,3 +1,9 @@
+############################################################################
+############################################################################
+####    Initializing
+############################################################################
+############################################################################
+
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
@@ -28,6 +34,14 @@ creds = service_account.Credentials.from_service_account_file(
                   ]
           )  
 
+
+
+############################################################################
+############################################################################
+####    Basic Variables / Formatting
+############################################################################
+############################################################################
+
 def original_v_clean_message():
     themessage = """
     ---
@@ -46,6 +60,28 @@ def today_string_file():
     current_date = today.strftime('%m%d')
     return current_date
 
+
+
+
+############################################################################
+############################################################################
+####    Query Functions
+############################################################################
+############################################################################
+
+def stored_GET_data(spreadsheetId, spreadsheetRange):   
+    service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
+    spreadsheetId = spreadsheetId
+    spreadsheetRange = spreadsheetRange
+    result = service.spreadsheets().values().get(
+                                                spreadsheetId=spreadsheetId, 
+                                                range=spreadsheetRange
+                                                ).execute()
+    df = pd.DataFrame(result['values'])
+    df.columns = df.iloc[0]
+    dfpiv = df[1:]
+    return df, dfpiv
+    
 def load_workbook_range(range_string, ws):
     col_start, col_end = re.findall("[A-Z]+", range_string)
 
@@ -73,6 +109,77 @@ def excel_storage_conversion(df):
     goog = df.values.tolist()
     return { 'values': goog }
 
+def query_current_and_previous_version_ids(service_line, forecast_month, iteration_num):
+   subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
+   # Current ID
+   try:
+    filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month) & (subm_df['Iteration']==iteration_num)]
+    current_id = filtered_list['SubmissionID']
+   except:
+    current_id = ''   
+
+   # Previous ID
+   try:
+    filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month) & (subm_df['Iteration']==iteration_num-1)]
+    previous_id = filtered_list['SubmissionID']
+   except:
+    previous_id = '' 
+   return current_id, previous_id
+
+def generate_list_within_forecast_month(service_line, forecast_month):
+   subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
+   try:
+    filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month)]
+    versions_to_compare = list(filtered_list['SubmissionID'])
+   except:
+    versions_to_compare = []
+   return versions_to_compare
+
+
+def get_df_from_full_dataset_using_subid(subm_id, service_line):
+   full_df = stored_GET_data(ssid_full, service_line+'!A1:P')[0]
+   specified_df = full_df[(full_df['submission_id']==subm_id)]
+   specified_df = specified_df.drop('submission_id', axis=1)
+   return specified_df
+
+def generate_df_changes(df1, df2, service_line):
+    diff = df1.compare(df2)
+    diffT = diff.T
+    col_mon = diff.columns.to_list()
+    col_exa = diff.T.columns.to_list()
+    if service_line == 'Mamm':
+        exam_ref = ['Screening Mammography', 'Screening Breast US', 'Diagnostic Mamm', 
+                'Recall from Screening', 'Ductogram', 'Breast Ultrasound', 'Biopsy', 
+                'Stereotactic Biopsy', 'Breast MRI Biopsy', 'Breast MRI', 'DEXA', 
+                'Needle Loc', 'Seed Loc', 'Abscess Drainage', 'Sentinel Injection', 
+                'Cyst Aspiration']
+    elif service_line == 'CIS':
+       exam_ref = ['CT', 'Cal Sc CT', 'Cardiac CT', 'DX', 'MR', 'US', 'Fluoroscopy', 
+                   'Screening Mamm', 'DEXA']
+    else:
+       exam_ref = ['New Patient Consults', '1st Veins', 'Additional Veins', 
+                   'MD Sclerotherapy', 'Ultrasounds', 'Other']
+    elist_int = list(range(0,len(col_exa)))
+    mlist_int = list(range(0,len(col_mon),2))
+
+    string_output = ''
+    for row in elist_int:
+        for col in mlist_int:
+            if pd.isna(diff.iloc[row,col]) == False:
+                new_line = '*  ' + exam_ref[row] + '  (' + col_mon[col][0] + '):  from  ' + \
+                    str(round(diff.iloc[row,col])) + '  →  ' + str(round(diff.iloc[row,col+1])) + '\n\n'
+                
+                string_output = string_output + new_line
+    return string_output
+
+
+
+############################################################################
+############################################################################
+####    Transformation Functions
+############################################################################
+############################################################################
+
 def reformat_add_df_context(df, facility, submission_id, forecast_select, itnum):
     df['Facility'] = facility
     df['submission_id'] = submission_id
@@ -81,19 +188,6 @@ def reformat_add_df_context(df, facility, submission_id, forecast_select, itnum)
     df=df[1:]
     return df
 
-def stored_GET_data(spreadsheetId, spreadsheetRange):   
-    service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
-    spreadsheetId = spreadsheetId
-    spreadsheetRange = spreadsheetRange
-    result = service.spreadsheets().values().get(
-                                                spreadsheetId=spreadsheetId, 
-                                                range=spreadsheetRange
-                                                ).execute()
-    df = pd.DataFrame(result['values'])
-    df.columns = df.iloc[0]
-    dfpiv = df[1:]
-    return df, dfpiv
-    
 def stored_SET_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):  
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
     spreadsheetId = spreadsheetId  # '1-zYgl-7ffj8cV2N80aICDHHKHfqyQX5rE3HXDcgSsfc'
@@ -245,4 +339,11 @@ def add_submission_line(metadata):
     goog = excel_storage_conversion(metadata_df)
     stored_APPEND_data(ssid_subm, 'All!A:K', goog)
 
+
+
+############################################################################
+############################################################################
+####    File-Based Functions
+############################################################################
+############################################################################
 

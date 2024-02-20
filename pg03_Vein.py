@@ -39,6 +39,10 @@ st.markdown(final_df.to_html(escape=False, index=False),unsafe_allow_html=True)
 ######################
 st.markdown('')
 st.markdown('')
+
+compare_list = h.generate_list_within_forecast_month('Vein', forecast_select)
+compare_select   = st.selectbox('Functional Area', compare_list, index=None)
+
 st.markdown('')
 st.markdown('')
 st.markdown("""
