@@ -130,7 +130,7 @@ def query_current_and_previous_version_ids(service_line, forecast_month, iterati
         current_id = filtered_list1['SubmissionID'][0]
         current_id = 'success'
    except:
-        current_id = 'fail'   
+        current_id = len(filtered_list1['SubmissionID']) #'fail'   
 
    # Previous ID
    try:
