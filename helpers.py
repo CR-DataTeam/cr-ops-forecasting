@@ -120,7 +120,7 @@ def from_SubmissionTitle_return_SL_FM_IN(submission_title):
     sl_found = ''
     fm_found = ''
     in_found = ''
-   return filtered_list, sl_found, fm_found, in_found
+   return sl_found, fm_found, in_found
 
 def query_current_and_previous_version_ids(service_line, forecast_month, iteration_num):
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
@@ -133,11 +133,11 @@ def query_current_and_previous_version_ids(service_line, forecast_month, iterati
 
    # Previous ID
    try:
-       filtered_list2 = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month) & (subm_df['Iteration']==int(iteration_num)-1)]
+       filtered_list2 = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month) & (subm_df['Iteration']==int(iteration_num)-1)].reset_index(drop=True)
        previous_id = filtered_list2['SubmissionID'][0]
    except:
        previous_id = '' 
-   return service_line, forecast_month, iteration_num #filtered_list1, filtered_list2 #current_id, previous_id    # filtered_list1, filtered_list2 #
+   return current_id, previous_id    # filtered_list1, filtered_list2 #
 
 def generate_list_within_forecast_month(service_line, forecast_month):
    subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
