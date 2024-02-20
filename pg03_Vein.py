@@ -44,15 +44,13 @@ compare_list = h.generate_list_within_forecast_month('Vein', forecast_select)
 compare_select   = st.selectbox('Select a Version to See Changes', compare_list, index=None)
 sl_found, fm_found, in_found = h.from_SubmissionTitle_return_SL_FM_IN(compare_select)
 curr_id, prev_id = h.query_current_and_previous_version_ids(sl_found, fm_found, in_found)
-curr_id
-prev_id
 curr_df = h.get_df_from_full_dataset_using_subid(curr_id, 'Vein')
 prev_df = h.get_df_from_full_dataset_using_subid(prev_id, 'Vein')
 comp_output = h.generate_df_changes(curr_df, prev_df, 'Vein')
 if len(curr_id) > 0 and len(prev_id) > 0:
     st.markdown(comp_output)
-else:
-    st.markdown('No comparison available.')
+# else:
+#     st.markdown('No comparison available.')
 
 st.markdown('')
 st.markdown('')

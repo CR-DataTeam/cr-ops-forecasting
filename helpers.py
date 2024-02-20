@@ -188,7 +188,7 @@ def generate_df_changes(df1, df2, service_line):
                     
                     string_output = string_output + new_line
     except:
-       string_output = 'Curr_df: ' + df1 + '   prev_df:  ' + df2
+       string_output = 'No comparison available.'
     return string_output
 
 
