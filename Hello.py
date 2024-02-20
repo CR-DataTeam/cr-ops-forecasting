@@ -105,6 +105,6 @@ if submitted:
                 }
         h.add_submission_line(upload_metadata) 
         st.success('File uploaded successfully.')
-st.markdown('After submitting, please wait until you see a green message of "File uploaded successfully." appears on your screen before doing anything else. The upload itself can take anywhere from 5-20 seconds, I apologize for the delay.')
+st.markdown('After submitting, please wait until a green message stating "File uploaded successfully." appears on your screen before doing anything else. The upload itself can take anywhere from 5-20 seconds, I apologize for the delay.')
         
     
