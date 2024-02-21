@@ -192,7 +192,7 @@ def generate_df_changes(df1, df2, service_line):
                 if pd.isna(diff.iloc[row,col]) == False:
                     exam_row = col_exa[row] % exam_type_num
                     new_line = '*  ' + df1['FacilityName'][col_exa[row]] + '  ///  ' + exam_ref[exam_row] + '  (' + col_mon[col][0] + '):  from  ' + \
-                        str(round(float(diff.iloc[row,col+1]))) + '  →  ' + str(round(float(diff.iloc[row,col]))) + '\n'
+                        str(round(float(diff.iloc[row,col]))) + '  →  ' + str(round(float(diff.iloc[row,col+1]))) + '\n'
                     
                     string_output = string_output + new_line
     except:
