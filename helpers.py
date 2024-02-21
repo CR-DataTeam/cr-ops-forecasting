@@ -179,11 +179,19 @@ def generate_df_changes(df1, df2, service_line):
         elist_int = list(range(0,len(col_exa)))
         mlist_int = list(range(0,len(col_mon),2))
 
+        if service_line == 'Mamm':
+            exam_type_num = 16
+        elif service_line == 'CIS':
+            exam_type_num = 9
+        else:
+            exam_type_num = 6
+
         string_output = ''
         for row in elist_int:
             for col in mlist_int:
                 if pd.isna(diff.iloc[row,col]) == False:
-                    new_line = '*  ' + df1['FacilityName'][col] + '  ///  ' + exam_ref[row] + '  (' + col_mon[col][0] + '):  from  ' + \
+                    exam_row = col_exa[row] % exam_type_num
+                    new_line = '*  ' + df1['FacilityName'][col_exa[row]] + '  ///  ' + exam_ref[exam_row] + '  (' + col_mon[col][0] + '):  from  ' + \
                         str(round(float(diff.iloc[row,col]))) + '  →  ' + str(round(float(diff.iloc[row,col+1]))) + '\n'
                     
                     string_output = string_output + new_line
