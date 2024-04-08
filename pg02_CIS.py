@@ -46,9 +46,9 @@ sl_found, fm_found, in_found = h.from_SubmissionTitle_return_SL_FM_IN(compare_se
 curr_id, prev_id = h.query_current_and_previous_version_ids(sl_found, fm_found, in_found)
 curr_df = h.get_df_from_full_dataset_using_subid(curr_id, 'CIS')
 prev_df = h.get_df_from_full_dataset_using_subid(prev_id, 'CIS')
-st.markdown('<u>Changes from prior version</u>:',unsafe_allow_html=True) 
-comp_output = h.generate_df_changes(curr_df, prev_df, 'CIS')
-st.code(comp_output)
+# st.markdown('<u>Changes from prior version</u>:',unsafe_allow_html=True) 
+# comp_output = h.generate_df_changes(curr_df, prev_df, 'CIS')
+# st.code(comp_output)
 
 st.markdown('')
 st.markdown('')
