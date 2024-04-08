@@ -98,7 +98,7 @@ def excel_reader_get_data(excel_file, facility_list, service_line):
         range_sl = 'A1:N10'
     else:
         range_sl = 'A1:N7'
-    wb = openpyxl.load_workbook(excel_file, read_only=True)
+    wb = openpyxl.load_workbook(excel_file, data_only=True)
     data = {}
     for facility in facility_list:
        ws = wb[facility]
