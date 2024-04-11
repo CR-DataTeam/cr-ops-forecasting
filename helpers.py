@@ -195,6 +195,7 @@ def generate_df_changes(df1, df2, service_line):
                         str(round(float(diff.iloc[row,col+1]))) + '  →  ' + str(round(float(diff.iloc[row,col]))) + '\n'
                     
                     string_output = string_output + new_line
+                    print(string_output)
     except:
        string_output = 'No comparison available.'
     return string_output
