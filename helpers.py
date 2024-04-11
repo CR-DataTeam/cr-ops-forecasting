@@ -165,6 +165,7 @@ def generate_df_changes(df1, df2, service_line):
         diffT = diff.T
         col_mon = diff.columns.to_list()
         col_exa = diff.T.columns.to_list()
+        print('watch1')
         if service_line == 'Mamm':
             exam_ref = ['Screening Mammography', 'Screening Breast US', 'Diagnostic Mamm', 
                     'Recall from Screening', 'Ductogram', 'Breast Ultrasound', 'Biopsy', 
@@ -177,6 +178,7 @@ def generate_df_changes(df1, df2, service_line):
         else:
             exam_ref = ['New Patient Consults', '1st Veins', 'Additional Veins', 
                     'MD Sclerotherapy', 'Ultrasounds', 'Other']
+        print('watch2')
         # flist_int = list(range(0,len))
         elist_int = list(range(0,len(col_exa)))
         mlist_int = list(range(0,len(col_mon),2))
@@ -188,14 +190,18 @@ def generate_df_changes(df1, df2, service_line):
         else:
             exam_type_num = 6
 
+        print('watch3')
         string_output = ''
         for row in elist_int:
+            print('watch4')
             for col in mlist_int:
+                print('watch5')
                 if pd.isna(diff.iloc[row,col]) == False:
                     exam_row = col_exa[row] % exam_type_num
                     new_line = '*  ' + df1['FacilityName'][col_exa[row]] + '  ///  ' + exam_ref[exam_row] + '  (' + col_mon[col][0] + '):  from  ' + \
                         str(round(float(diff.iloc[row,col+1]))) + '  →  ' + str(round(float(diff.iloc[row,col]))) + '\n'
                     
+                    print('watch6')
                     string_output = string_output + new_line
                     print(string_output)
     except:
