@@ -21,6 +21,8 @@ import io
 import shutil
 from openpyxl.utils.dataframe import dataframe_to_rows
 
+pd.options.mode.chained_assignment = None  # default='warn'
+
 ssid_subm = '10Od0nhz92hKVpuAwXFg45XGRZMz6x8vYf3cPvtxQe5E'
 ssid_full = '1SsrJp5370HOfCURm64vOHIjZnMxmeC5deVZ6bLTEJE4'
 
