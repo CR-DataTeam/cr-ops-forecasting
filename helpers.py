@@ -166,7 +166,10 @@ def generate_df_changes(df1, df2, service_line):
         diffT = diff.T
         col_mon = diff.columns.to_list()
         col_exa = diff.T.columns.to_list()
+        
         # os.write(1, f"{x}\n".encode()) 
+        # os.write(1, "watch\n".encode()) 
+        
         if service_line == 'Mamm':
             exam_ref = ['Screening Mammography', 'Screening Breast US', 'Diagnostic Mamm', 
                     'Recall from Screening', 'Ductogram', 'Breast Ultrasound', 'Biopsy', 
@@ -193,19 +196,17 @@ def generate_df_changes(df1, df2, service_line):
 
         string_output = ''
         for row in elist_int:
-            os.write(1, "w4\n".encode()) 
             for col in mlist_int:
-                os.write(1, "w5\n".encode()) 
+                from_value = str(diff.iloc[row,col+1]).replace(',','')
+                to_value = str(diff.iloc[row,col]).replace(',','')
                 if pd.isna(diff.iloc[row,col]) == False:
-                    xz = diff.iloc[row,col]
-                    os.write(1, f"{xz}\n".encode()) 
+                    # debugval = diff.iloc[row,col]
+                    # os.write(1, f"{debugval}\n".encode()) 
                     exam_row = col_exa[row] % exam_type_num
                     new_line = '*  ' + df1['FacilityName'][col_exa[row]] + '  ///  ' + exam_ref[exam_row] + '  (' + col_mon[col][0] + '):  from  ' + \
-                        str(round(float(diff.iloc[row,col+1]))) + '  →  ' + str(round(float(diff.iloc[row,col]))) + '\n'
+                        str(round(float(from_value))) + '  →  ' + str(round(float(to_value))) + '\n'
                     
-                    os.write(1, "w6\n".encode()) 
                     string_output = string_output + new_line
-                    os.write(1, f"{string_output}\n".encode()) 
     except:
        string_output = 'No comparison available.'
     return string_output
