@@ -45,8 +45,8 @@ st.write("# Forecasting Tool")
 col1, col2, col3 = st.columns([.25,1,.25])
 
 servline_list = ['','Mamm','CIS','Vein']
-forecast_list = ['Budget','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
-fxarea_list   = ['Ops', 'Finance', 'Marketing', 'Other']
+forecast_list = ['','Budget','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
+fxarea_list   = ['','Ops', 'Finance', 'Marketing', 'Other']
 with col2:
     with st.form("my_form"):  # , clear_on_submit=True):
         servline_select = st.selectbox('Service Line', servline_list)  # , index=None)
@@ -73,7 +73,8 @@ facilities = {
 
 
 if submitted:
-    if servline_select is not None and forecast_select is not None and fxarea_select is not None and editor_entry is not None and uploaded_file is not None:
+    # if servline_select is not None and forecast_select is not None and fxarea_select is not None and editor_entry is not None and uploaded_file is not None:
+    if servline_select != '' and forecast_select != '' and fxarea_select != '' and editor_entry is not None and uploaded_file is not None:
         input_validity = True
     else:
         input_validity = False
