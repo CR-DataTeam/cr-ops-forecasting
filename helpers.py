@@ -1,5 +1,29 @@
 ############################################################################
 ############################################################################
+####    Explanation
+############################################################################
+############################################################################
+###     2 Environments: Streamlit, Google Drive
+###
+###         Streamlit: 3 Containers
+###             1) Upload Form
+###             2) Review List
+###             3) Review Comparison
+###         
+###         Google Drive: 3 Containers
+###             1) Submission Metadata - Sheet
+###             2) Submitted Forecast #s - Sheet
+###             3) File Storage for all versions - Folder
+###         
+###         Processes
+###         
+###         
+
+
+
+
+############################################################################
+############################################################################
 ####    Initializing
 ############################################################################
 ############################################################################
@@ -160,7 +184,7 @@ def get_df_from_full_dataset_using_subid(subm_id, service_line):
    # except:
     #   return pd.DataFrame()
 
-def generate_df_changes(df1, df2, service_line):
+def generate_df_changes(df1, df2, service_line):  #, abus_flag):
     try:
         diff = df1.compare(df2)
         diffT = diff.T
