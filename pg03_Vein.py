@@ -12,10 +12,11 @@ LOGGER = get_logger(__name__)
 init_SL = 'Vein'
 
 # Optional -- adds the title and icon to the current page
-st.set_page_config(
-     page_title=init_SL+ ' Review',
-     layout="wide"
-     )
+# Optional -- adds the title and icon to the current page
+#st.set_page_config(
+#     page_title=init_SL+ ' Review',
+#     layout="wide"
+#     )
 
 forecast_list = ['Budget','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
 forecast_select = st.selectbox('Forecast Version', forecast_list, index=7)
