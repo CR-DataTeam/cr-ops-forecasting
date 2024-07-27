@@ -23,7 +23,7 @@ LOGGER = get_logger(__name__)
 
 pg = st.navigation({
     "Submit Files": [
-        st.Page('Hello.py', title="Submission Form", default=True, icon="📁"),
+        st.Page('streamlit_app.py', title="Submission Form", default=True, icon="📁"),
         ],
     "Review Forecasts": [
         st.Page('pg01_Mamm.py', title="Mamm Forecast Files", icon="🏥"),
