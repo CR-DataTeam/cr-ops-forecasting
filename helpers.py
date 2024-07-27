@@ -86,17 +86,24 @@ def today_string_file():
     today = datetime.today() - timedelta(hours=5)
     current_date = today.strftime('%m%d')
     return current_date
+    
+def number_naming_convention(num):
+   nums = str(num)
+   return_str = ''
+   for x in range(4-len(nums)):
+       return_str += '0'
+   return return_str + nums
 
 
 
 
 ############################################################################
 ############################################################################
-####    Query Functions
+####    Foundational Functions (used in other Functions)
 ############################################################################
 ############################################################################
 
-def stored_GET_data(spreadsheetId, spreadsheetRange):   
+def GET_data_from_googlesheet(spreadsheetId, spreadsheetRange):   
     service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
     spreadsheetId = spreadsheetId
     spreadsheetRange = spreadsheetRange
@@ -109,35 +116,37 @@ def stored_GET_data(spreadsheetId, spreadsheetRange):
     dfpiv = df[1:]
     return df, dfpiv
     
-def load_workbook_range(range_string, ws):
-    col_start, col_end = re.findall("[A-Z]+", range_string)
+    
+def APPEND_clean_version_detailed_data_to_master_table(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):  
+    service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
+    spreadsheetId = spreadsheetId  # '1-zYgl-7ffj8cV2N80aICDHHKHfqyQX5rE3HXDcgSsfc'
+    spreadsheetRange = spreadsheetRange  # 'CurrentFacilityValues!A:BQ'
+    inputOption = 'USER_ENTERED'
+    valueBody = valueBody
+    result = service.spreadsheets().values().append(
+                                              spreadsheetId=spreadsheetId, 
+                                              range=spreadsheetRange,
+                                              valueInputOption=inputOption, 
+                                              body=valueBody
+                                              ).execute()
+    
 
-    data_rows = []
-    for row in ws[range_string]:
-        data_rows.append([cell.value for cell in row])
-
-    return pd.DataFrame(data_rows, columns=get_column_interval(col_start, col_end))
-
-def excel_reader_get_data(excel_file, facility_list, service_line):
-    if service_line == 'Mamm':
-        range_sl = 'A1:N17'
-    elif service_line == 'CIS':
-        range_sl = 'A1:N10'
-    else:
-        range_sl = 'A1:N7'
-    wb = openpyxl.load_workbook(excel_file, data_only=True, read_only=True)
-    data = {}
-    for facility in facility_list:
-       ws = wb[facility]
-       data[facility] = load_workbook_range(range_string=range_sl, ws=ws)  # df
-    return data  # dict of dfs
 
 def excel_storage_conversion(df):
     goog = df.values.tolist()
     return { 'values': goog }
 
+
+
+
+############################################################################
+############################################################################
+####    Comparison Tool Functions
+############################################################################
+############################################################################
+
 def from_SubmissionTitle_return_SL_FM_IN(submission_title):
-   subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
+   subm_df = GET_data_from_googlesheet(ssid_subm, 'All!A1:K')[0]
    try:
     filtered_list = subm_df[(subm_df['SubmissionTitle']==submission_title)].reset_index(drop=True)
     sl_found = filtered_list['ServiceLine'][0]
@@ -150,7 +159,7 @@ def from_SubmissionTitle_return_SL_FM_IN(submission_title):
    return sl_found, fm_found, in_found
 
 def query_current_and_previous_version_ids(service_line, forecast_month, iteration_num):
-   subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
+   subm_df = GET_data_from_googlesheet(ssid_subm, 'All!A1:K')[0]
    # Current ID
    try:
         filtered_list1 = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==str(forecast_month)) & (subm_df['Iteration']==str(iteration_num))].reset_index(drop=True)
@@ -167,7 +176,7 @@ def query_current_and_previous_version_ids(service_line, forecast_month, iterati
    return current_id, previous_id    # filtered_list1, filtered_list2 #
 
 def generate_list_within_forecast_month(service_line, forecast_month):
-   subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
+   subm_df = GET_data_from_googlesheet(ssid_subm, 'All!A1:K')[0]
    try:
     filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month)]
     versions_to_compare = list(filtered_list['SubmissionTitle'])
@@ -177,7 +186,7 @@ def generate_list_within_forecast_month(service_line, forecast_month):
 
 def get_df_from_full_dataset_using_subid(subm_id, service_line):
    # try:
-      full_df = stored_GET_data(ssid_full, service_line+'!A1:P')[0]
+      full_df = GET_data_from_googlesheet(ssid_full, service_line+'!A1:P')[0]
       specified_df = full_df[(full_df['submission_id']==subm_id)]
       specified_df = specified_df.drop('submission_id', axis=1)
       return specified_df.reset_index(drop=True)
@@ -237,45 +246,33 @@ def generate_df_changes(df1, df2, service_line):  #, abus_flag):
 
 
 
+
 ############################################################################
 ############################################################################
-####    Transformation Functions
+####    Form Submission Functions:  In order
 ############################################################################
 ############################################################################
 
-def reformat_add_df_context(df, facility, submission_id, forecast_select, itnum):
-    df['Facility'] = facility
-    df['submission_id'] = submission_id
-    df['ForecastVersion'] = forecast_select
-    df['IterationNum'] = itnum
-    df=df[1:]
-    return df
+def excel_reader_get_data(excel_file, facility_list, service_line):
+    def load_workbook_range(range_string, ws):
+        col_start, col_end = re.findall("[A-Z]+", range_string)
+        data_rows = []
+        for row in ws[range_string]:
+            data_rows.append([cell.value for cell in row])
+        return pd.DataFrame(data_rows, columns=get_column_interval(col_start, col_end))
 
-def stored_SET_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):  
-    service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
-    spreadsheetId = spreadsheetId  # '1-zYgl-7ffj8cV2N80aICDHHKHfqyQX5rE3HXDcgSsfc'
-    spreadsheetRange = spreadsheetRange  # 'CurrentFacilityValues!A1:BQ321'
-    inputOption = 'USER_ENTERED'
-    valueBody = valueBody
-    result = service.spreadsheets().values().update(
-                                              spreadsheetId=spreadsheetId, 
-                                              range=spreadsheetRange,
-                                              valueInputOption=inputOption, 
-                                              body=valueBody
-                                              ).execute()
-    
-def stored_APPEND_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):  
-    service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
-    spreadsheetId = spreadsheetId  # '1-zYgl-7ffj8cV2N80aICDHHKHfqyQX5rE3HXDcgSsfc'
-    spreadsheetRange = spreadsheetRange  # 'CurrentFacilityValues!A:BQ'
-    inputOption = 'USER_ENTERED'
-    valueBody = valueBody
-    result = service.spreadsheets().values().append(
-                                              spreadsheetId=spreadsheetId, 
-                                              range=spreadsheetRange,
-                                              valueInputOption=inputOption, 
-                                              body=valueBody
-                                              ).execute()
+    if service_line == 'Mamm':
+        range_sl = 'A1:N17'
+    elif service_line == 'CIS':
+        range_sl = 'A1:N10'
+    else:
+        range_sl = 'A1:N7'
+    wb = openpyxl.load_workbook(excel_file, data_only=True, read_only=True)
+    data = {}
+    for facility in facility_list:
+       ws = wb[facility]
+       data[facility] = load_workbook_range(range_string=range_sl, ws=ws)  # df
+    return data  # dict of dfs
 
 def upload_file_to_drive(upload_file, file_name):
   service = build("drive", "v3", credentials=creds)
@@ -310,29 +307,15 @@ def upload_file_to_drive(upload_file, file_name):
   
   return fileid
 
-def df_to_excel(df, ws, header=False, index=False, startrow=1, startcol=2):
-    """Write DataFrame df to openpyxl worksheet ws"""
-
-    rows = dataframe_to_rows(df, header=header, index=index)
-
-    for r_idx, row in enumerate(rows, startrow + 1):
-        for c_idx, value in enumerate(row, startcol + 1):
-             ws.cell(row=r_idx, column=c_idx).value = value
-
-def convert_df(excel_file, facility_list, service_line):
-    output = BytesIO()
-    df_dict = excel_reader_get_data(excel_file, facility_list, service_line)
-    writer = pd.ExcelWriter(output, 
-                            engine='xlsxwriter', 
-                            engine_kwargs={'options':{'strings_to_numbers':True, 'in_memory': True}})
-    for i in range(len(facility_list)):
-        df_dict[df_dict['FacilityName']==facility_list[i]].to_excel(writer,
-                                                                 sheet_name=facility_list[i],
-                                                                 index=False)
-    writer.close()
-    return output.getvalue()
 
 def create_clean_copy(new_file_name, df_dict, facility_list, service_line):
+    def write_df_to_openpyxl_excel_sheet(df, ws, header=False, index=False, startrow=1, startcol=2):
+        """Write DataFrame df to openpyxl worksheet ws"""
+        rows = dataframe_to_rows(df, header=header, index=index)
+        for r_idx, row in enumerate(rows, startrow + 1):
+            for c_idx, value in enumerate(row, startcol + 1):
+                 ws.cell(row=r_idx, column=c_idx).value = value
+
     buffer = io.BytesIO()
     service = build("drive", "v3", credentials=creds)
     if service_line == 'Mamm':
@@ -346,7 +329,7 @@ def create_clean_copy(new_file_name, df_dict, facility_list, service_line):
         for facility in facility_list:
             df = df_dict[facility].iloc[1:,2:]   ##########
             ws = wb[facility] 
-            df_to_excel(df, ws) 
+            write_df_to_openpyxl_excel_sheet(df, ws) 
         wb.save(buffer)
         buffervals = buffer.getvalue()
         
@@ -379,28 +362,28 @@ def create_clean_copy(new_file_name, df_dict, facility_list, service_line):
     return fileid
 
 def final_combine_and_store_all_facilities(df_dict, facility_list, submission_id, serviceline, forecast_select, itnum):
-   for facility in facility_list:
+    def reformat_add_df_context(df, facility, submission_id, forecast_select, itnum):
+        df['Facility'] = facility
+        df['submission_id'] = submission_id
+        df['ForecastVersion'] = forecast_select
+        df['IterationNum'] = itnum
+        df=df[1:]
+        return df
+    for facility in facility_list:
       df = df_dict[facility]
       df = reformat_add_df_context(df, facility, submission_id, forecast_select, itnum)
       body = excel_storage_conversion(df)
-      stored_APPEND_data(ssid_full, serviceline+'!A:R', body) ############## in progress
-      
-def get_iteration(service_line, forecast_month):
-   subm_df = stored_GET_data(ssid_subm, 'All!A1:K')[0]
-   filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month)]
-   return len(filtered_list)
-
-def number_naming_convention(num):
-   nums = str(num)
-   return_str = ''
-   for x in range(4-len(nums)):
-       return_str += '0'
-   return return_str + nums
+      APPEND_clean_version_detailed_data_to_master_table(ssid_full, serviceline+'!A:R', body) ############## in progress
 
 def add_submission_line(metadata):
     metadata_df = pd.DataFrame(metadata, index=[0])
     goog = excel_storage_conversion(metadata_df)
-    stored_APPEND_data(ssid_subm, 'All!A:K', goog)
+    APPEND_clean_version_detailed_data_to_master_table(ssid_subm, 'All!A:K', goog)
+    
+def get_iteration(service_line, forecast_month):
+   subm_df = GET_data_from_googlesheet(ssid_subm, 'All!A1:K')[0]
+   filtered_list = subm_df[(subm_df['ServiceLine']==service_line) & (subm_df['Version']==forecast_month)]
+   return len(filtered_list)
 
 
 
@@ -410,3 +393,37 @@ def add_submission_line(metadata):
 ############################################################################
 ############################################################################
 
+
+
+
+############################################################################
+############################################################################
+####    No longer needed?
+############################################################################
+############################################################################
+
+def DEPRECATE_stored_SET_data(spreadsheetId, spreadsheetRange, valueBody, inputOption='USER_ENTERED'):  
+    service = build('sheets', 'v4', credentials=creds, cache_discovery=False)
+    spreadsheetId = spreadsheetId  # '1-zYgl-7ffj8cV2N80aICDHHKHfqyQX5rE3HXDcgSsfc'
+    spreadsheetRange = spreadsheetRange  # 'CurrentFacilityValues!A1:BQ321'
+    inputOption = 'USER_ENTERED'
+    valueBody = valueBody
+    result = service.spreadsheets().values().update(
+                                              spreadsheetId=spreadsheetId, 
+                                              range=spreadsheetRange,
+                                              valueInputOption=inputOption, 
+                                              body=valueBody
+                                              ).execute()
+                                              
+def DEPRECATE_convert_df(excel_file, facility_list, service_line):
+    output = BytesIO()
+    df_dict = excel_reader_get_data(excel_file, facility_list, service_line)
+    writer = pd.ExcelWriter(output, 
+                            engine='xlsxwriter', 
+                            engine_kwargs={'options':{'strings_to_numbers':True, 'in_memory': True}})
+    for i in range(len(facility_list)):
+        df_dict[df_dict['FacilityName']==facility_list[i]].to_excel(writer,
+                                                                 sheet_name=facility_list[i],
+                                                                 index=False)
+    writer.close()
+    return output.getvalue()
