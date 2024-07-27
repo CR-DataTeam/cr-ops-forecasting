@@ -28,24 +28,6 @@ pg = st.navigation(nav)
 add_page_title(pg)
 pg.run()
 
-## Optional -- adds the title and icon to the current page
-#st.set_page_config(
-#    page_title="Forecasting Tool",
-#    # layout="wide"
-#)
-
-## add_page_title()
-
-#show_pages(
-#    [
-#        Page("Hello.py", "Submit File"),
-#        Page("pg01_Mamm.py", "Mamm Review"),
-#        Page("pg02_CIS.py",  "CIS Review"),
-#        Page("pg03_Vein.py", "Vein Review"),
-#    ]
-#)
-
-
 
 st.write("# Forecasting Tool")
 
