@@ -21,10 +21,10 @@ from tempfile import NamedTemporaryFile
 
 LOGGER = get_logger(__name__)
 
-#st.set_page_config(
+st.set_page_config(
 #    page_title="Forecasting Tool",
-#    # layout="wide"
-#)
+     layout="wide"
+)
 
 st.write("# Forecasting Tool")
 

@@ -1,12 +1,8 @@
 # streamlit_app.py
 import streamlit as st
-import pathlib
-
-CURRENT_DIR = pathlib.Path(__file__).parent.resolve()
 
 pg = st.navigation({
     "Submit Files": [
-        # Load pages from functions
         st.Page('Hello.py', title="Submission Form", default=True, icon="📁"),
         ],
     "Review Forecasts": [
