@@ -1,0 +1,29 @@
+[[pages]]
+name = "File Submission"
+# icon = "🎈️"
+is_section = true
+
+[[pages]]
+path = "Hello.py"
+name = "File Submission Form"
+# icon = "🏠"
+
+[[pages]]
+name = "Review Files"
+# icon = "🎈️"
+is_section = true
+
+[[pages]]
+path = "pg01_Mamm"
+name = "Mamm Files"
+# icon = "💪"
+
+[[pages]]
+path = "pg02_CIS"
+name = "CIS Files"
+# icon = "💪"
+
+[[pages]]
+path = "pg03_Vein"
+name = "Vein Files"
+# icon = "💪"

@@ -14,29 +14,36 @@
 
 import streamlit as st
 from streamlit.logger import get_logger
-from st_pages import Page, show_pages, add_page_title
+from st_pages import add_page_title, get_nav_from_toml
 import helpers as h
 import pandas as pd
 from tempfile import NamedTemporaryFile
 
 LOGGER = get_logger(__name__)
 
-# Optional -- adds the title and icon to the current page
-st.set_page_config(
-     page_title="Forecasting Tool",
-     # layout="wide"
-     )
+# Updated Page Config
+st.set_page_config(layout="wide")
+nav = get_nav_from_toml(".streamlit/pages_sections.toml")
+pg = st.navigation(nav)
+add_page_title(pg)
+pg.run()
 
-# add_page_title()
+## Optional -- adds the title and icon to the current page
+#st.set_page_config(
+#    page_title="Forecasting Tool",
+#    # layout="wide"
+#)
 
-show_pages(
-    [
-        Page("Hello.py", "Submit File"),
-        Page("pg01_Mamm.py", "Mamm Review"),
-        Page("pg02_CIS.py",  "CIS Review" ),
-        Page("pg03_Vein.py", "Vein Review"),
-    ]
-)
+## add_page_title()
+
+#show_pages(
+#    [
+#        Page("Hello.py", "Submit File"),
+#        Page("pg01_Mamm.py", "Mamm Review"),
+#        Page("pg02_CIS.py",  "CIS Review"),
+#        Page("pg03_Vein.py", "Vein Review"),
+#    ]
+#)
 
 
 
