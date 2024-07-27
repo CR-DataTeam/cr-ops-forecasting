@@ -14,16 +14,16 @@ icon = "🗃"
 is_section = true
 
 [[pages]]
-path = "pg01_Mamm"
+path = "pg01_Mamm.py"
 name = "Mamm Files"
 icon = "🏥"
 
 [[pages]]
-path = "pg02_CIS"
+path = "pg02_CIS.py"
 name = "CIS Files"
 icon = "🏥"
 
 [[pages]]
-path = "pg03_Vein"
+path = "pg03_Vein.py"
 name = "Vein Files"
 icon = "🏥"
