@@ -14,20 +14,17 @@
 
 import streamlit as st
 from streamlit.logger import get_logger
-from st_pages import add_page_title, get_nav_from_toml
+# from st_pages import add_page_title, get_nav_from_toml
 import helpers as h
 import pandas as pd
 from tempfile import NamedTemporaryFile
 
-# Updated Page Config
-# st.set_page_config(layout="wide")
-nav = get_nav_from_toml(".streamlit/pages_sections.toml")
-pg = st.navigation(nav)
-add_page_title(pg)
-pg.run()
-
 LOGGER = get_logger(__name__)
 
+#st.set_page_config(
+#    page_title="Forecasting Tool",
+#    # layout="wide"
+#)
 
 st.write("# Forecasting Tool")
 
