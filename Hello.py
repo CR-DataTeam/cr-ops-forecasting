@@ -20,7 +20,7 @@ import pandas as pd
 from tempfile import NamedTemporaryFile
 
 # Updated Page Config
-st.set_page_config(layout="wide")
+# st.set_page_config(layout="wide")
 nav = get_nav_from_toml(".streamlit/pages_sections.toml")
 pg = st.navigation(nav)
 add_page_title(pg)
