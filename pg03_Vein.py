@@ -12,7 +12,6 @@ LOGGER = get_logger(__name__)
 init_SL = 'Vein'
 
 # Optional -- adds the title and icon to the current page
-# Optional -- adds the title and icon to the current page
 #st.set_page_config(
 #     page_title=init_SL+ ' Review',
 #     layout="wide"
@@ -48,7 +47,7 @@ curr_id, prev_id = h.query_current_and_previous_version_ids(sl_found, fm_found, 
 curr_df = h.get_df_from_full_dataset_using_subid(curr_id, 'Vein')
 prev_df = h.get_df_from_full_dataset_using_subid(prev_id, 'Vein')
 st.markdown('<u>Changes from prior version</u>:',unsafe_allow_html=True) 
-comp_output = h.generate_df_changes(curr_df, prev_df, 'Vein')
+comp_output = h.generate_df_changes(curr_df, prev_df, 'Vein', forecast_select)
 st.code(comp_output)
 
 st.markdown('')
