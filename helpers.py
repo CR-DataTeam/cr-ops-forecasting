@@ -253,7 +253,7 @@ def generate_df_changes(df1, df2, service_line):  #, abus_flag):
 ############################################################################
 ############################################################################
 
-def excel_reader_get_data(excel_file, facility_list, service_line):
+def excel_reader_get_data(excel_file, facility_list, service_line, forecast_month):
     def load_workbook_range(range_string, ws):
         col_start, col_end = re.findall("[A-Z]+", range_string)
         data_rows = []
@@ -261,8 +261,10 @@ def excel_reader_get_data(excel_file, facility_list, service_line):
             data_rows.append([cell.value for cell in row])
         return pd.DataFrame(data_rows, columns=get_column_interval(col_start, col_end))
 
-    if service_line == 'Mamm':
+    if service_line == 'Mamm' and forecast_month in ('Budget','00+12','01+11','02+10','03+09','04+08','05+07','06+06'):
         range_sl = 'A1:N17'
+    elif service_line == 'Mamm' and forecast_month in ('07+05','08+04','09+03','10+02','11+01','12+00','Strat Plan'):
+        range_sl = 'A1:N21'
     elif service_line == 'CIS':
         range_sl = 'A1:N10'
     else:
@@ -308,7 +310,7 @@ def upload_file_to_drive(upload_file, file_name):
   return fileid
 
 
-def create_clean_copy(new_file_name, df_dict, facility_list, service_line):
+def create_clean_copy(new_file_name, df_dict, facility_list, service_line, forecast_month):
     def write_df_to_openpyxl_excel_sheet(df, ws, header=False, index=False, startrow=1, startcol=2):
         """Write DataFrame df to openpyxl worksheet ws"""
         rows = dataframe_to_rows(df, header=header, index=index)
@@ -318,8 +320,10 @@ def create_clean_copy(new_file_name, df_dict, facility_list, service_line):
 
     buffer = io.BytesIO()
     service = build("drive", "v3", credentials=creds)
-    if service_line == 'Mamm':
+    if service_line == 'Mamm' and forecast_month in ('Budget','00+12','01+11','02+10','03+09','04+08','05+07','06+06'):
         template_name = 'Mamm_Template.xlsx'
+    elif service_line == 'Mamm' and forecast_month in ('07+05','08+04','09+03','10+02','11+01','12+00','Strat Plan'):
+        template_name = 'Mamm_Template_ABUS.xlsx'
     elif service_line == 'CIS':
         template_name = 'CIS_Template.xlsx'
     else:
