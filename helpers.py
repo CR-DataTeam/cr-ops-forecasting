@@ -193,7 +193,7 @@ def get_df_from_full_dataset_using_subid(subm_id, service_line):
    # except:
     #   return pd.DataFrame()
 
-def generate_df_changes(df1, df2, service_line):  #, abus_flag):
+def generate_df_changes(df1, df2, service_line, forecast_month):  #, abus_flag):
     try:
         diff = df1.compare(df2)
         diffT = diff.T
@@ -203,9 +203,22 @@ def generate_df_changes(df1, df2, service_line):  #, abus_flag):
         # os.write(1, f"{x}\n".encode()) 
         # os.write(1, "watch\n".encode()) 
         
-        if service_line == 'Mamm':
+        if service_line == 'Mamm' and forecast_month in ('Budget','00+12','01+11','02+10','03+09','04+08','05+07','06+06'):
             exam_ref = ['Screening Mammography', 'Screening Breast US', 'Diagnostic Mamm', 
                     'Recall from Screening', 'Ductogram', 'Breast Ultrasound', 'Biopsy', 
+                    'Stereotactic Biopsy', 'Breast MRI Biopsy', 'Breast MRI', 'DEXA', 
+                    'Needle Loc', 'Seed Loc', 'Abscess Drainage', 'Sentinel Injection', 
+                    'Cyst Aspiration']
+        elif service_line == 'Mamm' and forecast_month in ('07+05','08+04','09+03','10+02','11+01','12+00','Strat Plan'):
+            exam_ref = ['Screening Mammography', 'Screening Breast US', 
+                        'ABUS Screening Breast US',
+                         'Diagnostic Mamm', 
+                    'Recall from Screening', 
+                    'Recall from ABUS Screening Dx Mamm',
+                    'Ductogram', 'Breast Ultrasound', 
+                    'Recall from ABUS Screening US (ltd & cmp)',
+                    'ABUS Dx Breast US (ltd & cmp)',
+                    'Biopsy', 
                     'Stereotactic Biopsy', 'Breast MRI Biopsy', 'Breast MRI', 'DEXA', 
                     'Needle Loc', 'Seed Loc', 'Abscess Drainage', 'Sentinel Injection', 
                     'Cyst Aspiration']
@@ -220,8 +233,10 @@ def generate_df_changes(df1, df2, service_line):  #, abus_flag):
         elist_int = list(range(0,len(col_exa)))
         mlist_int = list(range(0,len(col_mon),2))
 
-        if service_line == 'Mamm':
+        if service_line == 'Mamm' and forecast_month in ('Budget','00+12','01+11','02+10','03+09','04+08','05+07','06+06'):
             exam_type_num = 16
+        elif service_line == 'Mamm' and forecast_month in ('07+05','08+04','09+03','10+02','11+01','12+00','Strat Plan'):
+            exam_type_num = 20
         elif service_line == 'CIS':
             exam_type_num = 9
         else:
