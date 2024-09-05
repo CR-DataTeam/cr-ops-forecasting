@@ -42,8 +42,13 @@ st.markdown('')
 
 compare_list = h.generate_list_within_forecast_month('Mamm', forecast_select)
 compare_select   = st.selectbox('Select a Version to See Changes', compare_list) # , index=None)
+
+# compare_select         = st.selectbox('Select the CURRENT Version to Compare', compare_list) # , index=None)
+# compare_select_prior   = st.selectbox('Select the PRIOR Version to See Changes', compare_list) # , index=None)
+
 sl_found, fm_found, in_found = h.from_SubmissionTitle_return_SL_FM_IN(compare_select)
-curr_id, prev_id = h.query_current_and_previous_version_ids(sl_found, fm_found, in_found)
+# sl_found_p, fm_found_p, in_found_p = h.from_SubmissionTitle_return_SL_FM_IN(compare_select_prior)
+curr_id, prev_id = h.query_current_and_previous_version_ids(sl_found, fm_found, in_found) #, in_found_p)
 curr_df = h.get_df_from_full_dataset_using_subid(curr_id, 'Mamm')
 prev_df = h.get_df_from_full_dataset_using_subid(prev_id, 'Mamm')
 st.markdown('<u>Changes from prior version</u>:',unsafe_allow_html=True) 

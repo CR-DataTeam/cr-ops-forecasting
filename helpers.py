@@ -337,10 +337,14 @@ def create_clean_copy(new_file_name, df_dict, facility_list, service_line, forec
     service = build("drive", "v3", credentials=creds)
     if service_line == 'Mamm' and forecast_month in ('Budget','00+12','01+11','02+10','03+09','04+08','05+07','06+06'):
         template_name = 'Mamm_Template.xlsx'
-    elif service_line == 'Mamm' and forecast_month in ('07+05','08+04','09+03','10+02','11+01','12+00','Strat Plan'):
+    elif service_line == 'Mamm' and forecast_month in ('07+05','08+04','09+03','10+02','11+01','12+00'):
         template_name = 'Mamm_Template_ABUS.xlsx'
+    elif service_line == 'Mamm' and forecast_month in ('Strat Plan'):
+        template_name = 'Mamm_Template_Strat.xlsx'
     elif service_line == 'CIS':
         template_name = 'CIS_Template.xlsx'
+    elif service_line == 'CIS' and forecast_month in ('Strat Plan'):
+        template_name = 'CIS_Template_Strat.xlsx'
     else:
         template_name = 'Vein_Template.xlsx'
     try:

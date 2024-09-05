@@ -12,7 +12,7 @@ st.write("# Forecasting Tool")
 col1, col2, col3 = st.columns([.25,1,.25])
 
 servline_list = ['','Mamm','CIS','Vein']
-forecast_list = ['','Budget','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
+forecast_list = ['','Strat Plan','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
 fxarea_list   = ['','Ops', 'Finance', 'Marketing', 'Other']
 with col2:
     with st.form("my_form"):  # , clear_on_submit=True):
@@ -25,16 +25,26 @@ with col2:
 
         # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
-
-facilities = {
-    'Mamm': ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
-        'McDowell', 'MCP', 'MMP', 'Mobile', 'Monroe', 'Mooresville', 
-        'Pineville', 'Prosperity', 'Rock Hill', 'Rosedale', 'Southpark', 
-        'Steele Creek', 'Union West', 'University'], 
-    'CIS': ['Ballantyne', 'Denver', 'Huntersville', 'Matthews',
-        'Rock Hill', 'Southpark'], 
-    'Vein': ['Huntersville', 'Southpark']
-}
+if forecast_select != 'Strat Plan':
+    facilities = {
+        'Mamm': ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
+            'McDowell', 'MCP', 'MMP', 'Mobile', 'Monroe', 'Mooresville', 
+            'Pineville', 'Prosperity', 'Rock Hill', 'Rosedale', 'Southpark', 
+            'Steele Creek', 'Union West', 'University'], 
+        'CIS': ['Ballantyne', 'Denver', 'Huntersville', 'Matthews',
+            'Rock Hill', 'Southpark'], 
+        'Vein': ['Huntersville', 'Southpark']
+    }
+else:
+    facilities = {
+        'Mamm': ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
+            'McDowell', 'MCP', 'MMP', 'Mobile', 'Monroe', 'Mooresville', 
+            'Pineville', 'Prosperity', 'Rock Hill', 'Rosedale', 'Southpark', 
+            'Steele Creek', 'Union West', 'University','FortMill'], 
+        'CIS': ['Ballantyne', 'Denver', 'Huntersville', 'Matthews',
+            'Rock Hill', 'Southpark','FortMill'], 
+        'Vein': ['Huntersville', 'Southpark']
+    }
 
 
 ## EXCEPTIONS:  New ABUS & Strat Plan
