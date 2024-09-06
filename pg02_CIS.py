@@ -17,7 +17,7 @@ init_SL = 'CIS'
 #     layout="wide"
 #     )
 
-forecast_list = ['Budget','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
+forecast_list = ['Strat Plan','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
 forecast_select = st.selectbox('Forecast Version', forecast_list, index=7)
 
 subm_df = h.GET_data_from_googlesheet(h.ssid_subm, 'All!A1:K')[0]
