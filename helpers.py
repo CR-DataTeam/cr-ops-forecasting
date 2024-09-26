@@ -345,6 +345,8 @@ def create_clean_copy(new_file_name, df_dict, facility_list, service_line, forec
         template_name = 'CIS_Template_Strat.xlsx'
     elif service_line == 'CIS':
         template_name = 'CIS_Template.xlsx'
+    elif service_line == 'Vein' and forecast_month in ('Strat Plan'):
+        template_name = 'Vein_Template_Strat.xlsx'
     else:
         template_name = 'Vein_Template.xlsx'
     try:
