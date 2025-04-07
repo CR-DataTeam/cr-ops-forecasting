@@ -13,9 +13,9 @@ pg = st.navigation({
         st.Page('pg00_submitform.py', title="Submission Form", default=True, icon="📁"),
         ],
     "Review Forecasts": [
-        st.Page('pg01_Mamm.py', title="Mamm Forecast Files", icon="🏥"),
-        st.Page('pg02_CIS.py',  title="CIS Forecast Files",  icon="🏥"),
-        st.Page('pg03_Vein.py', title="Vein Forecast Files", icon="🏥"),
+        st.Page('pg01_Mamm.py', title="Mamm Forecast Files", icon="🔴"),
+        st.Page('pg02_CIS.py',  title="CIS Forecast Files",  icon="🔵"),
+        st.Page('pg03_Vein.py', title="Vein Forecast Files", icon="🟢"),
         ],
 })
 pg.run()
