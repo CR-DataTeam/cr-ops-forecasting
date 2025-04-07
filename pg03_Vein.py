@@ -17,8 +17,8 @@ init_SL = 'Vein'
 #     layout="wide"
 #     )
 
-forecast_list = ['Strat Plan','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
-forecast_select = st.selectbox('Forecast Version', forecast_list, index=0)
+forecast_list = ['Strat Plan','12+00','01+11','02+10','03+09','04+08','05+07','06+06','07+05','08+04','09+03','10+02','11+01']
+forecast_select = st.selectbox('Forecast Version', forecast_list, index=4)
 
 subm_df = h.GET_data_from_googlesheet(h.ssid_subm, 'All!A1:K')[0]
 df = subm_df[(subm_df['ServiceLine']==init_SL) & (subm_df['Version']==forecast_select)]
