@@ -203,13 +203,7 @@ def generate_df_changes(df1, df2, service_line, forecast_month):  #, abus_flag):
         # os.write(1, f"{x}\n".encode()) 
         # os.write(1, "watch\n".encode()) 
         
-        if service_line == 'Mamm' and forecast_month in ('Budget','00+12','01+11','02+10','03+09','04+08','05+07','06+06'):
-            exam_ref = ['Screening Mammography', 'Screening Breast US', 'Diagnostic Mamm', 
-                    'Recall from Screening', 'Ductogram', 'Breast Ultrasound', 'Biopsy', 
-                    'Stereotactic Biopsy', 'Breast MRI Biopsy', 'Breast MRI', 'DEXA', 
-                    'Needle Loc', 'Seed Loc', 'Abscess Drainage', 'Sentinel Injection', 
-                    'Cyst Aspiration']
-        elif service_line == 'Mamm' and forecast_month in ('07+05','08+04','09+03','10+02','11+01','12+00','Strat Plan'):
+        if service_line == 'Mamm':
             exam_ref = ['Screening Mammography', 'Screening Breast US', 
                         'ABUS Screening Breast US',
                          'Diagnostic Mamm', 
@@ -233,9 +227,7 @@ def generate_df_changes(df1, df2, service_line, forecast_month):  #, abus_flag):
         elist_int = list(range(0,len(col_exa)))
         mlist_int = list(range(0,len(col_mon),2))
 
-        if service_line == 'Mamm' and forecast_month in ('Budget','00+12','01+11','02+10','03+09','04+08','05+07','06+06'):
-            exam_type_num = 16
-        elif service_line == 'Mamm' and forecast_month in ('07+05','08+04','09+03','10+02','11+01','12+00','Strat Plan'):
+        if service_line == 'Mamm':
             exam_type_num = 20
         elif service_line == 'CIS':
             exam_type_num = 9
@@ -276,9 +268,7 @@ def excel_reader_get_data(excel_file, facility_list, service_line, forecast_mont
             data_rows.append([cell.value for cell in row])
         return pd.DataFrame(data_rows, columns=get_column_interval(col_start, col_end))
 
-    if service_line == 'Mamm' and forecast_month in ('Budget','00+12','01+11','02+10','03+09','04+08','05+07','06+06'):
-        range_sl = 'A1:N17'
-    elif service_line == 'Mamm' and forecast_month in ('07+05','08+04','09+03','10+02','11+01','12+00','Strat Plan'):
+    if service_line == 'Mamm':
         range_sl = 'A1:N21'
     elif service_line == 'CIS':
         range_sl = 'A1:N10'
@@ -335,9 +325,7 @@ def create_clean_copy(new_file_name, df_dict, facility_list, service_line, forec
 
     buffer = io.BytesIO()
     service = build("drive", "v3", credentials=creds)
-    if service_line == 'Mamm' and forecast_month in ('Budget','00+12','01+11','02+10','03+09','04+08','05+07','06+06'):
-        template_name = 'Mamm_Template.xlsx'
-    elif service_line == 'Mamm' and forecast_month in ('07+05','08+04','09+03','10+02','11+01','12+00'):
+    if service_line == 'Mamm' and forecast_month not in ('Strat Plan'):
         template_name = 'Mamm_Template_ABUS.xlsx'
     elif service_line == 'Mamm' and forecast_month in ('Strat Plan'):
         template_name = 'Mamm_Template_Strat.xlsx'

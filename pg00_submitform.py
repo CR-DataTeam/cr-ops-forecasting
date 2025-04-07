@@ -27,11 +27,11 @@ with col2:
         submitted = st.form_submit_button("Submit")
 if forecast_select != 'Strat Plan':
     facilities = {
-        'Mamm': ['Ballantyne', 'Blakeney', 'Huntersville', 'Matthews',
+        'Mamm': ['Ballantyne', 'Blakeney', 'FortMill', 'Huntersville', 'Matthews',
             'McDowell', 'MCP', 'MMP', 'Mobile', 'Monroe', 'Mooresville', 
             'Pineville', 'Prosperity', 'Rock Hill', 'Rosedale', 'Southpark', 
             'Steele Creek', 'Union West', 'University'], 
-        'CIS': ['Ballantyne', 'Denver', 'Huntersville', 'Matthews',
+        'CIS': ['Ballantyne', 'Denver', 'FortMill', 'Huntersville', 'Matthews',
             'Rock Hill', 'Southpark'], 
         'Vein': ['Huntersville', 'Southpark']
     }
@@ -75,7 +75,7 @@ if submitted:
         cleanfileid = h.create_clean_copy(filename, df_dict, facility_list, servline_select, forecast_select)
         h.final_combine_and_store_all_facilities(df_dict, facility_list, upfileid, servline_select, forecast_select, itnum)
         upload_metadata = {'ServiceLine':servline_select, 
-                'Year':2024,
+                'Year':2025,
                 'Version':forecast_select,
                 'FunctionalArea':fxarea_select,
                 'Submitter':editor_entry,
