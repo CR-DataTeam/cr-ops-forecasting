@@ -17,7 +17,7 @@ fxarea_list   = ['','Ops', 'Finance', 'Marketing', 'Other']
 with col2:
     with st.form("my_form"):  # , clear_on_submit=True):
         servline_select = st.selectbox('Service Line', servline_list)  # , index=None)
-        forecast_select = st.selectbox('Forecast Version', forecast_list,index=7)  # , index=None)
+        forecast_select = st.selectbox('Forecast Version', forecast_list,index=1)  # , index=None)
         fxarea_select   = st.selectbox('Functional Area', fxarea_list)  # , index=None)
         editor_entry    = st.text_input('Name')
         note_entry      = st.text_input('Submission Note')
