@@ -217,7 +217,7 @@ def generate_df_changes(df1, df2, service_line, forecast_month):  #, abus_flag):
                     'Needle Loc', 'Seed Loc', 'Abscess Drainage', 'Sentinel Injection', 
                     'Cyst Aspiration']
         elif service_line == 'CIS' and forecast_month == 'Strat Plan':
-            exam_ref = ['CT', 'Cal Sc CT', 'Cardiac CT', 'DX', 'MR', 'US', 'Fluoroscopy', 
+            exam_ref = ['CT', 'Cal Sc CT', 'Cardiac CT', 'DX', 'MR', 'US', 
                     'Screening Mamm', 'DEXA', 'PET/CT']
         elif service_line == 'CIS':
             exam_ref = ['CT', 'Cal Sc CT', 'Cardiac CT', 'DX', 'MR', 'US', 'Fluoroscopy', 
@@ -232,8 +232,6 @@ def generate_df_changes(df1, df2, service_line, forecast_month):  #, abus_flag):
 
         if service_line == 'Mamm':
             exam_type_num = 20
-        elif service_line == 'CIS' and forecast_month == 'Strat Plan':
-            exam_type_num = 10
         elif service_line == 'CIS':
             exam_type_num = 9
         else:
