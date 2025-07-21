@@ -216,6 +216,9 @@ def generate_df_changes(df1, df2, service_line, forecast_month):  #, abus_flag):
                     'Stereotactic Biopsy', 'Breast MRI Biopsy', 'Breast MRI', 'DEXA', 
                     'Needle Loc', 'Seed Loc', 'Abscess Drainage', 'Sentinel Injection', 
                     'Cyst Aspiration']
+        elif service_line == 'CIS' and forecast_month == 'Strat Plan':
+            exam_ref = ['CT', 'Cal Sc CT', 'Cardiac CT', 'DX', 'MR', 'US', 'Fluoroscopy', 
+                    'Screening Mamm', 'DEXA', 'PET/CT']
         elif service_line == 'CIS':
             exam_ref = ['CT', 'Cal Sc CT', 'Cardiac CT', 'DX', 'MR', 'US', 'Fluoroscopy', 
                     'Screening Mamm', 'DEXA']
@@ -229,6 +232,8 @@ def generate_df_changes(df1, df2, service_line, forecast_month):  #, abus_flag):
 
         if service_line == 'Mamm':
             exam_type_num = 20
+        elif service_line == 'CIS' and forecast_month == 'Strat Plan':
+            exam_type_num = 10
         elif service_line == 'CIS':
             exam_type_num = 9
         else:
@@ -271,7 +276,7 @@ def excel_reader_get_data(excel_file, facility_list, service_line, forecast_mont
     if service_line == 'Mamm':
         range_sl = 'A1:N21'
     elif service_line == 'CIS':
-        range_sl = 'A1:N10'
+        range_sl = 'A1:N11'
     else:
         range_sl = 'A1:N7'
     wb = openpyxl.load_workbook(excel_file, data_only=True, read_only=True)
