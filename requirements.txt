@@ -2,7 +2,7 @@ altair<5
 numpy
 pandas
 pydeck
-streamlit
+streamlit==1.53.0
 st-pages
 google_api_python_client
 openpyxl
